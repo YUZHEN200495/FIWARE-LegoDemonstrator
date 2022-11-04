@@ -1,0 +1,109 @@
+---
+# Copyleft (c) 2021 Contributors to Smart Data Models initiative
+# 
+
+components:
+  schemas: 
+    #Parking Spot for Mobility_Hub and Harbour
+    ParkingSpot: 
+      $ref: "https://smart-data-models.github.io/dataModel.Parking/ParkingSpot/model.yaml#/ParkingSpot"
+
+    #Dokk1 CarPark
+    OffStreetParking: 
+      $ref: "https://smart-data-models.github.io/dataModel.Parking/OffStreetParking/model.yaml#/OffStreetParking"
+
+    #For the Temperature and Humidity sensor
+    WeatherObserved: 
+      $ref: "https://smart-data-models.github.io/dataModel.Weather/WeatherObserved/model.yaml#/WeatherObserved"
+
+    #Energy Produced
+    GreenEnergyGenerator: 
+      $ref: "https://smart-data-models.github.io/dataModel.GreenEnergy/GreenEnergyGenerator/model.yaml#/GreenEnergyGenerator"
+    
+    #Energy consumed
+    EnergyConsumer: 
+      $ref: "https://smart-data-models.github.io/dataModel.EnergyCIM/EnergyConsumer/model.yaml#/EnergyConsumer"
+    
+    # This is the base definition of a building
+    Building: 
+      $ref: "https://fiware.github.io/tutorials.NGSI-LD/models/building.yaml#/Building"
+    
+    # This is reduced list of the defined building categories within
+    # the Smart AgriFood domain
+    BuildingCategories: 
+      enum:
+        #Moduls of Smart World by FIWARE
+        - Impress
+        - KI_Marketplace
+        - Production_Claas
+        - Mobility_Hub
+        - Harbour
+        - Addix
+        - Dokk1
+        - Werfenweng_Ski
+        - Townhall_Aarhus
+        - SmartHouse
+        - Wind_Energy
+        - Industry1
+        - Industry2
+        - Agrifood
+        - Rotes_Rathaus_Berlin
+        - Vienna
+        - Basis
+
+      description: |
+
+        ### Moduls of Smart World by FIWARE
+
+        - `Impress`
+        - `KI_Marketplace`
+        - `Production_Claas`
+        - `Mobility_Hub`
+        - `Harbour`
+        - `Addix`
+        - `Dokk1`
+        - `Werfenweng_Ski`
+        - `Townhall_Aarhus`
+        - `SmartHouse`
+        - `Wind_Energy`
+        - `Industry1`
+        - `Industry2`
+        - `Agrifood`
+        - `Rotes_Rathaus_Berlin`
+        - `Vienna`
+        - `Basis`
+        
+      type: string
+      externalDocs: 
+        url: "https://wiki.openstreetmap.org/wiki/Map_Features#Building"
+      x-ngsi: 
+        uri-prefix: "https://wiki.openstreetmap.org/wiki/Tag:building%3D"
+
+    # This is a base definition of an IoT Device
+    Device: 
+      $ref: "https://fiware.github.io/tutorials.NGSI-LD/models/device.yaml#/Device"
+    # This is the full list of IoT Device Categories
+    DeviceCategory: 
+      $ref: "https://fiware.github.io/tutorials.NGSI-LD/models/saref-terms.yaml#/Categories"
+    # This is a full list of context attributes measurable by devices
+    ControlledProperties: 
+      $ref: "https://fiware.github.io/tutorials.NGSI-LD/models/saref-terms.yaml#/ControlledProperties"
+
+info: 
+  description: "Description of all the Smart Data Models included in the Digital Twin of the Smart World by FIWARE"
+  title: Smart Data Models for the Smart World by FIWARE
+  version: "1.0.0"
+openapi: "3.0.0"
+
+# These paths are merely representative.
+paths: 
+  /ngsi-ld/v1/entities: 
+    get: 
+      responses: 
+        ? "200"
+        : 
+          description:  OK
+          content: 
+            application/ld+json: 
+              schema: 
+                type: object

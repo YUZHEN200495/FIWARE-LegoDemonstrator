@@ -1,0 +1,170 @@
+# WARNING: Do not deploy this tutorial configuration directly to a production environment
+#
+# The tutorial docker-compose files have not been written for production deployment and will not 
+# scale. A proper architecture has been sacrificed to keep the narrative focused on the learning 
+# goals, they are just used to deploy everything onto a single Docker machine. All FIWARE components 
+# are running at full debug and extra ports have been exposed to allow for direct calls to services. 
+# They also contain various obvious security flaws - passwords in plain text, no load balancing,
+# no use of HTTPS and so on. 
+# 
+# This is all to avoid the need of multiple machines, generating certificates, encrypting secrets
+# and so on, purely so that a single docker-compose file can be read as an example to build on, 
+# not use directly. 
+# 
+# When deploying to a production environment, please refer to the Helm Repository
+# for FIWARE Components in order to scale up to a proper architecture:
+# 
+# see: https://github.com/FIWARE/helm-charts/
+#
+version: "3.5"
+services:
+  # @context file is served from here
+  ld-context:
+    image: httpd:alpine
+    hostname: context
+    container_name: fiware-ld-context
+    restart: always
+    ports:
+      - "3004:80"
+    volumes:
+      - ../data-models:/usr/local/apache2/htdocs/
+    networks:
+      - default
+
+  # Orion is the context broker
+  orion:
+    image: marcdespland/orion-ld:FIWARE_8.0_arm64
+    hostname: orion
+    container_name: fiware-orion
+    restart: always
+    depends_on:
+      - mongo-db
+      - ld-context
+    networks:
+      - default
+    expose:
+      - "${ORION_LD_PORT}"
+    ports:
+      - "${ORION_LD_PORT}:${ORION_LD_PORT}" # localhost:1026
+    command: -dbhost mongo-db -logLevel DEBUG -forwarding
+    healthcheck:
+      test: curl --fail -s http://orion:${ORION_LD_PORT}/version || exit 1
+      interval: 5s
+  
+  # IoT-Agent is configured for the JSON Protocol
+  iot-agent:
+    image: letsfiware/iotagent-json:1.17.0
+    hostname: iot-agent
+    container_name: fiware-iot-agent
+    depends_on:
+      - mongo-db
+      - ld-context
+      - mosquitto
+    networks:
+      - default
+    expose:
+      - "${IOTA_NORTH_PORT}"
+    ports:
+      - "${IOTA_NORTH_PORT}:${IOTA_NORTH_PORT}" # localhost:4041
+    environment:
+      - IOTA_CB_HOST=orion # name of the context broker to update context
+      - IOTA_CB_PORT=${ORION_LD_PORT} # port the context broker listens on to update context
+      - IOTA_NORTH_PORT=${IOTA_NORTH_PORT}
+      - IOTA_REGISTRY_TYPE=mongodb #Whether to hold IoT device info in memory or in a database
+      - IOTA_LOG_LEVEL=DEBUG # The log level of the IoT Agent
+      - IOTA_TIMESTAMP=true # Supply timestamp information with each measurement
+      - IOTA_AUTOCAST=true # Ensure Ultralight number values are read as numbers not strings
+      - IOTA_MONGO_HOST=mongo-db # The host name of MongoDB
+      - IOTA_MONGO_PORT=${MONGO_DB_PORT} # The port mongoDB is listening on
+      - IOTA_MONGO_DB=iotagentjson # The name of the database used in mongoDB
+      - IOTA_PROVIDER_URL=http://iot-agent:${IOTA_NORTH_PORT}
+      - IOTA_DEFAULT_RESOURCE= # Default is blank. I'm using MQTT so I don't need a resource
+      - IOTA_CB_NGSI_VERSION=ld # use NGSI-LD when sending updates for active attributes
+      - IOTA_JSON_LD_CONTEXT=http://context/ngsi-context.jsonld
+      - IOTA_FALLBACK_TENANT=openiot
+      - IOTA_MQTT_HOST=mosquitto
+      - IOTA_MQTT_PORT=1883
+      - IOTA_MQTT_USERNAME=LegoDemonstrator
+      - IOTA_MQTT_PASSWORD=Lego12Demo34nstr56ator
+      - IOTA_MQTT_REJECT_UNAUTHORIZED=true
+      - IOTA_MQTT_PROTOCOL=mqtt
+      - IOTA_MQTT_QOS=0
+      - IOTA_MQTT_RETAIN=false
+      - IOTA_MQTT_RETRIES=2
+      - IOTA_MQTT_RETRY_TIME=5
+      - IOTA_MQTT_KEEPALIVE=60
+      - IOTA_MQTT_AVOID_LEADING_SLASH=0
+      - IOTA_MQTT_CLIENT_ID=iotagent
+    healthcheck:
+      interval: 5s
+
+
+  # Database
+  mongo-db:
+    image: mongo:${MONGO_DB_VERSION}
+    hostname: mongo-db
+    container_name: db-mongo
+    restart: always
+    expose:
+      - "${MONGO_DB_PORT}"
+    ports:
+      - "${MONGO_DB_PORT}:${MONGO_DB_PORT}" # localhost:27017
+    environment:
+      - MONGO_INITDB_DATABASE=/docker-entrypoint-initdb.d/mongoRestore.sh
+    networks:
+      - default
+    volumes:
+      - mongo-db:/data
+      - ../backups/db.dump:/backups/db.dump
+      - ../mongoRestore/mongoRestore.sh:/docker-entrypoint-initdb.d/mongoRestore.sh
+    healthcheck:
+      test: |
+        host=`hostname --ip-address || echo '127.0.0.1'`; 
+        mongo --quiet $host/test --eval 'quit(db.runCommand({ ping: 1 }).ok ? 0 : 2)' && echo 0 || echo 1
+      interval: 5s
+
+
+  # MQTT
+  mosquitto:
+    image: eclipse-mosquitto:1.6.14
+    hostname: mosquitto
+    container_name: mosquitto
+    restart: always
+    expose:
+      - "${MOSQUITTO_PORT}"
+      - "9001"
+    ports:
+      - "${MOSQUITTO_PORT}:${MOSQUITTO_PORT}" # localhost:1883
+      - "9001:9001"
+    volumes:
+      - ../mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - ../mosquitto/mosquitto.passwd:/mosquitto/config/mosquitto.passwd
+    networks:
+      - default
+
+  # HTML Server
+  nginx:
+    image: nginx:latest
+    restart: always
+    ports:
+      - 8080:80
+    volumes:
+      - ../html/index.html:/usr/share/nginx/html/index.html
+  
+  # CORS Proxy Server
+  cors-anywhere:
+    image: 7a6163/cors-anywhere:latest
+    restart: always
+    ports:
+      - 5000:8080
+    environment: 
+      - CORSANYWHERE_WHITELIST=http://192.168.1.100:8080
+
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 172.18.1.0/24
+
+volumes:
+  mongo-db: ~

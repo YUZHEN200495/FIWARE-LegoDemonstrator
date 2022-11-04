@@ -1,0 +1,11 @@
+version: "3.5"
+services:
+  # @context file is served from here
+  flutter-front:
+    image: fiware/frontend:latest
+    container_name: fiware-frontend
+    restart: always
+    ports:
+      - "8080:5000"
+    networks:
+      - default

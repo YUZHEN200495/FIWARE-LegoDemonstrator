@@ -1,0 +1,4289 @@
+{
+    "@context": {
+        "type": "@type",
+        "id": "@id",
+        "ngsi-ld": "https://uri.etsi.org/ngsi-ld/",
+        "fiware": "https://uri.fiware.org/ns/data-models#",
+        "schema": "https://schema.org/",
+        "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+        "xsd": "http://www.w3.org/2001/XMLSchema#",
+        "Addix": "https://wiki.openstreetmap.org/wiki/Tag:building%3DAddix",
+        "Agrifood": "https://wiki.openstreetmap.org/wiki/Tag:building%3DAgrifood",
+        "Basis": "https://wiki.openstreetmap.org/wiki/Tag:building%3DBasis",
+        "Building": "fiware:Building",
+        "Device": "fiware:Device",
+        "Dokk1": "https://wiki.openstreetmap.org/wiki/Tag:building%3DDokk1",
+        "EnergyConsumer": "fiware:EnergyConsumer",
+        "GreenEnergyGenerator": "fiware:GreenEnergyGenerator",
+        "HVAC": "https://w3id.org/saref#HVAC",
+        "Harbour": "https://wiki.openstreetmap.org/wiki/Tag:building%3DHarbour",
+        "Impress": "https://wiki.openstreetmap.org/wiki/Tag:building%3DImpress",
+        "Industry1": "https://wiki.openstreetmap.org/wiki/Tag:building%3DIndustry1",
+        "Industry2": "https://wiki.openstreetmap.org/wiki/Tag:building%3DIndustry2",
+        "KI_Marketplace": "https://wiki.openstreetmap.org/wiki/Tag:building%3DKI_Marketplace",
+        "LoadDynamics": {
+            "@id": "fiware:LoadDynamics",
+            "@type": "xsd:number"
+        },
+        "LoadResponse": {
+            "@id": "fiware:LoadResponse",
+            "@type": "xsd:number"
+        },
+        "Mobility_Hub": "https://wiki.openstreetmap.org/wiki/Tag:building%3DMobility_Hub",
+        "OffStreetParking": "fiware:OffStreetParking",
+        "ParkingSpot": "fiware:ParkingSpot",
+        "Production_Claas": "https://wiki.openstreetmap.org/wiki/Tag:building%3DProduction_Claas",
+        "Rotes_Rathaus_Berlin": "https://wiki.openstreetmap.org/wiki/Tag:building%3DRotes_Rathaus_Berlin",
+        "SmartHouse": "https://wiki.openstreetmap.org/wiki/Tag:building%3DSmartHouse",
+        "Townhall_Aarhus": "https://wiki.openstreetmap.org/wiki/Tag:building%3DTownhall_Aarhus",
+        "Vienna": "https://wiki.openstreetmap.org/wiki/Tag:building%3DVienna",
+        "WeatherObserved": "fiware:WeatherObserved",
+        "Werfenweng_Ski": "https://wiki.openstreetmap.org/wiki/Tag:building%3DWerfenweng_Ski",
+        "Wind_Energy": "https://wiki.openstreetmap.org/wiki/Tag:building%3DWind_Energy",
+        "acceptedPaymentMethod": {
+            "@id": "fiware:acceptedPaymentMethod",
+            "@type": "xsd:array"
+        },
+        "accessModified": {
+            "@id": "fiware:accessModified",
+            "@type": "xsd:string"
+        },
+        "actuator": "https://w3id.org/saref#actuator",
+        "address": "schema:address",
+        "addressCountry": {
+            "@id": "schema:addressCountry",
+            "@type": "xsd:string"
+        },
+        "addressLocality": {
+            "@id": "schema:addressLocality",
+            "@type": "xsd:string"
+        },
+        "addressRegion": {
+            "@id": "schema:addressRegion",
+            "@type": "xsd:string"
+        },
+        "aggregateRating": "fiware:aggregateRating",
+        "airPollution": "https://w3id.org/saref#airPollution",
+        "airQualityIndex": {
+            "@id": "fiware:airQualityIndex",
+            "@type": "xsd:number"
+        },
+        "airQualityIndexForecast": {
+            "@id": "fiware:airQualityIndexForecast",
+            "@type": "xsd:number"
+        },
+        "airTemperatureForecast": {
+            "@id": "fiware:airTemperatureForecast",
+            "@type": "xsd:number"
+        },
+        "airTemperatureTSA": "fiware:airTemperatureTSA",
+        "allowedVehicleType": {
+            "@id": "fiware:allowedVehicleType",
+            "@type": "xsd:array"
+        },
+        "alternateName": {
+            "@id": "fiware:alternateName",
+            "@type": "xsd:string"
+        },
+        "annotations": {
+            "@id": "fiware:annotations",
+            "@type": "xsd:array"
+        },
+        "aqiMajorPollutant": {
+            "@id": "fiware:aqiMajorPollutant",
+            "@type": "xsd:string"
+        },
+        "aqiMajorPollutantForecast": {
+            "@id": "fiware:aqiMajorPollutantForecast",
+            "@type": "xsd:string"
+        },
+        "areaServed": {
+            "@id": "fiware:areaServed",
+            "@type": "xsd:string"
+        },
+        "atmosphericPressure": "https://w3id.org/saref#atmosphericPressure",
+        "availableSlotNumber": {
+            "@id": "fiware:availableSlotNumber",
+            "@type": "xsd:number"
+        },
+        "availableSpotNumber": {
+            "@id": "fiware:availableSpotNumber",
+            "@type": "xsd:number"
+        },
+        "averageSpotLength": {
+            "@id": "fiware:averageSpotLength",
+            "@type": "xsd:number"
+        },
+        "averageSpotWidth": {
+            "@id": "fiware:averageSpotWidth",
+            "@type": "xsd:number"
+        },
+        "avgOverTime": {
+            "@id": "fiware:avgOverTime",
+            "@type": "xsd:number"
+        },
+        "batteryLevel": {
+            "@id": "fiware:batteryLevel",
+            "@type": "xsd:number"
+        },
+        "category": {
+            "@id": "fiware:category",
+            "@type": "@vocab"
+        },
+        "cdom": "https://w3id.org/saref#cdom",
+        "chargeType": {
+            "@id": "fiware:chargeType",
+            "@type": "xsd:array"
+        },
+        "cityId": {
+            "@id": "fiware:cityId",
+            "@type": "xsd:string"
+        },
+        "cityName": {
+            "@id": "fiware:cityName",
+            "@type": "xsd:string"
+        },
+        "color": {
+            "@id": "fiware:color",
+            "@type": "xsd:string"
+        },
+        "conductance": "https://w3id.org/saref#conductance",
+        "conductivity": "https://w3id.org/saref#conductivity",
+        "configuration": {
+            "@id": "fiware:configuration",
+            "@type": "xsd:string"
+        },
+        "contactPoint": "fiware:contactPoint",
+        "containedInPlace": {
+            "@id": "fiware:containedInPlace",
+            "@type": "@id"
+        },
+        "controlledAsset": {
+            "@id": "fiware:controlledAsset",
+            "@type": "@id"
+        },
+        "controlledProperty": {
+            "@id": "fiware:controlledProperty",
+            "@type": "@vocab"
+        },
+        "coordinates": {
+            "@id": "ngsi-ld:coordinates",
+            "@type": "xsd:undefined"
+        },
+        "dataProvider": {
+            "@id": "fiware:dataProvider",
+            "@type": "xsd:string"
+        },
+        "dateCreated": {
+            "@id": "fiware:dateCreated",
+            "@type": "xs:dateTime"
+        },
+        "dateFirstUsed": {
+            "@id": "fiware:dateFirstUsed",
+            "@type": "xs:dateTime"
+        },
+        "dateInstalled": {
+            "@id": "fiware:dateInstalled",
+            "@type": "xs:dateTime"
+        },
+        "dateLastCalibration": {
+            "@id": "fiware:dateLastCalibration",
+            "@type": "xs:dateTime"
+        },
+        "dateLastValueReported": {
+            "@id": "fiware:dateLastValueReported",
+            "@type": "xs:dateTime"
+        },
+        "dateManufactured": {
+            "@id": "fiware:dateManufactured",
+            "@type": "xs:dateTime"
+        },
+        "dateModified": {
+            "@id": "fiware:dateModified",
+            "@type": "xs:dateTime"
+        },
+        "dateObserved": {
+            "@id": "fiware:dateObserved",
+            "@type": "xs:dateTime"
+        },
+        "depth": "https://w3id.org/saref#depth",
+        "description": {
+            "@id": "ngsi-ld:description",
+            "@type": "xsd:string"
+        },
+        "deviceState": {
+            "@id": "fiware:deviceState",
+            "@type": "xsd:string"
+        },
+        "dewPoint": {
+            "@id": "fiware:dewPoint",
+            "@type": "xsd:number"
+        },
+        "district": {
+            "@id": "fiware:district",
+            "@type": "xsd:string"
+        },
+        "eatingActivity": "https://w3id.org/saref#eatingActivity",
+        "electricityConsumption": "https://w3id.org/saref#electricityConsumption",
+        "endgun": "https://w3id.org/saref#endgun",
+        "energy": "https://w3id.org/saref#energy",
+        "extCategory": {
+            "@id": "fiware:extCategory",
+            "@type": "xsd:array"
+        },
+        "extraSpotNumber": {
+            "@id": "fiware:extraSpotNumber",
+            "@type": "xsd:integer"
+        },
+        "facilities": {
+            "@id": "fiware:facilities",
+            "@type": "xsd:array"
+        },
+        "feelLikesTemperature": {
+            "@id": "fiware:feelLikesTemperature",
+            "@type": "xsd:number"
+        },
+        "feelsLikesTemperature": {
+            "@id": "fiware:feelsLikesTemperature",
+            "@type": "xsd:number"
+        },
+        "fillingLevel": "https://w3id.org/saref#fillingLevel",
+        "firmwareVersion": {
+            "@id": "fiware:firmwareVersion",
+            "@type": "xsd:string"
+        },
+        "firstAvailableFloor": {
+            "@id": "fiware:firstAvailableFloor",
+            "@type": "xsd:integer"
+        },
+        "floorsAboveGround": {
+            "@id": "fiware:floorsAboveGround",
+            "@type": "xsd:integer"
+        },
+        "floorsBelowGround": {
+            "@id": "fiware:floorsBelowGround",
+            "@type": "xsd:integer"
+        },
+        "fourWheelerSlots": "fiware:fourWheelerSlots",
+        "gasConsumption": "https://w3id.org/saref#gasConsumption",
+        "generationSources": {
+            "@id": "fiware:generationSources",
+            "@type": "xsd:array"
+        },
+        "gustSpeed": {
+            "@id": "fiware:gustSpeed",
+            "@type": "xsd:number"
+        },
+        "hardwareVersion": {
+            "@id": "fiware:hardwareVersion",
+            "@type": "xsd:string"
+        },
+        "heading": "https://w3id.org/saref#heading",
+        "highestFloor": {
+            "@id": "fiware:highestFloor",
+            "@type": "xsd:integer"
+        },
+        "humidity": "https://w3id.org/saref#humidity",
+        "illuminance": {
+            "@id": "fiware:illuminance",
+            "@type": "xsd:number"
+        },
+        "image": {
+            "@id": "fiware:image",
+            "@type": "xs:anyURI"
+        },
+        "images": {
+            "@id": "fiware:images",
+            "@type": "xsd:array"
+        },
+        "implement": "https://w3id.org/saref#implement",
+        "instValue": {
+            "@id": "fiware:instValue",
+            "@type": "xsd:number"
+        },
+        "ipAddress": {
+            "@id": "fiware:ipAddress",
+            "@type": "xsd:string"
+        },
+        "irrSection": "https://w3id.org/saref#irrSection",
+        "irrSystem": "https://w3id.org/saref#irrSystem",
+        "layout": {
+            "@id": "fiware:layout",
+            "@type": "xsd:array"
+        },
+        "length": {
+            "@id": "fiware:length",
+            "@type": "xsd:number"
+        },
+        "light": "https://w3id.org/saref#light",
+        "location": "https://w3id.org/saref#location",
+        "lowestFloor": {
+            "@id": "fiware:lowestFloor",
+            "@type": "xsd:integer"
+        },
+        "macAddress": {
+            "@id": "fiware:macAddress",
+            "@type": "xsd:string"
+        },
+        "maxBiomassMeasure": {
+            "@id": "fiware:maxBiomassMeasure",
+            "@type": "xsd:number"
+        },
+        "maxEolicPowerMeasure": {
+            "@id": "fiware:maxEolicPowerMeasure",
+            "@type": "xsd:number"
+        },
+        "maxGeothermalPowerGenerated": {
+            "@id": "fiware:maxGeothermalPowerGenerated",
+            "@type": "xsd:number"
+        },
+        "maxHydroPowerMeasure": {
+            "@id": "fiware:maxHydroPowerMeasure",
+            "@type": "xsd:number"
+        },
+        "maxOverTime": {
+            "@id": "fiware:maxOverTime",
+            "@type": "xsd:number"
+        },
+        "maxSolarPowerMeasure": {
+            "@id": "fiware:maxSolarPowerMeasure",
+            "@type": "xsd:number"
+        },
+        "maximumAllowedHeight": {
+            "@id": "fiware:maximumAllowedHeight",
+            "@type": "xsd:number"
+        },
+        "maximumAllowedWidth": {
+            "@id": "fiware:maximumAllowedWidth",
+            "@type": "xsd:number"
+        },
+        "maximumParkingDuration": {
+            "@id": "fiware:maximumParkingDuration",
+            "@type": "xsd:string"
+        },
+        "mcc": {
+            "@id": "fiware:mcc",
+            "@type": "xsd:string"
+        },
+        "measuresPeriod": {
+            "@id": "fiware:measuresPeriod",
+            "@type": "xsd:number"
+        },
+        "measuresPeriodUnit": {
+            "@id": "fiware:measuresPeriodUnit",
+            "@type": "xsd:string"
+        },
+        "meter": "https://w3id.org/saref#meter",
+        "milking": "https://w3id.org/saref#milking",
+        "minOverTime": {
+            "@id": "fiware:minOverTime",
+            "@type": "xsd:number"
+        },
+        "mnc": {
+            "@id": "fiware:mnc",
+            "@type": "xsd:string"
+        },
+        "motion": "https://w3id.org/saref#motion",
+        "movementActivity": "https://w3id.org/saref#movementActivity",
+        "multimedia": "https://w3id.org/saref#multimedia",
+        "municipalityInfo": "fiware:municipalityInfo",
+        "name": {
+            "@id": "ngsi-ld:name",
+            "@type": "xsd:string"
+        },
+        "network": "https://w3id.org/saref#network",
+        "noiseLevel": "https://w3id.org/saref#noiseLevel",
+        "observationDateTime": {
+            "@id": "fiware:observationDateTime",
+            "@type": "xs:dateTime"
+        },
+        "occupancy": "https://w3id.org/saref#occupancy",
+        "occupancyDetectionType": {
+            "@id": "fiware:occupancyDetectionType",
+            "@type": "xsd:array"
+        },
+        "occupancyModified": {
+            "@id": "fiware:occupancyModified",
+            "@type": "xs:dateTime"
+        },
+        "occupiedSlotNumber": {
+            "@id": "fiware:occupiedSlotNumber",
+            "@type": "xsd:number"
+        },
+        "occupiedSpotNumber": {
+            "@id": "fiware:occupiedSpotNumber",
+            "@type": "xsd:number"
+        },
+        "occupier": {
+            "@id": "fiware:occupier",
+            "@type": "@id"
+        },
+        "openingHours": {
+            "@id": "schema:openingHours",
+            "@type": "xsd:array"
+        },
+        "orp": "https://w3id.org/saref#orp",
+        "osVersion": {
+            "@id": "fiware:osVersion",
+            "@type": "xsd:string"
+        },
+        "outOfServiceSlotNumber": {
+            "@id": "fiware:outOfServiceSlotNumber",
+            "@type": "xsd:number"
+        },
+        "owner": {
+            "@id": "fiware:owner",
+            "@type": "@id"
+        },
+        "p": {
+            "@id": "fiware:p",
+            "@type": "xsd:number"
+        },
+        "pH": "https://w3id.org/saref#pH",
+        "parkingMode": {
+            "@id": "fiware:parkingMode",
+            "@type": "xsd:array"
+        },
+        "parkingSiteId": {
+            "@id": "fiware:parkingSiteId",
+            "@type": "xsd:string"
+        },
+        "pfixed": {
+            "@id": "fiware:pfixed",
+            "@type": "xsd:number"
+        },
+        "pfixedPct": {
+            "@id": "fiware:pfixedPct",
+            "@type": "xsd:number"
+        },
+        "postOfficeBoxNumber": {
+            "@id": "schema:postOfficeBoxNumber",
+            "@type": "xsd:string"
+        },
+        "postalCode": {
+            "@id": "schema:postalCode",
+            "@type": "xsd:string"
+        },
+        "power": "https://w3id.org/saref#power",
+        "precipitation": "https://w3id.org/saref#precipitation",
+        "precipitationForecast": {
+            "@id": "fiware:precipitationForecast",
+            "@type": "xsd:number"
+        },
+        "pressure": "https://w3id.org/saref#pressure",
+        "pressureTendency": {
+            "@id": "fiware:pressureTendency",
+            "@type": "xsd:undefined"
+        },
+        "priceCurrency": {
+            "@id": "fiware:priceCurrency",
+            "@type": "xsd:string"
+        },
+        "priceRatePerMinute": {
+            "@id": "fiware:priceRatePerMinute",
+            "@type": "xsd:number"
+        },
+        "provider": {
+            "@id": "fiware:provider",
+            "@type": "xsd:string"
+        },
+        "q": {
+            "@id": "fiware:q",
+            "@type": "xsd:number"
+        },
+        "qfixed": {
+            "@id": "fiware:qfixed",
+            "@type": "xsd:number"
+        },
+        "qfixedPct": {
+            "@id": "fiware:qfixedPct",
+            "@type": "xsd:number"
+        },
+        "redistribution": {
+            "@id": "fiware:redistribution",
+            "@type": "xsd:boolean"
+        },
+        "refDevice": {
+            "@id": "fiware:refDevice",
+            "@type": "@id"
+        },
+        "refDeviceModel": {
+            "@id": "fiware:refDeviceModel",
+            "@type": "@id"
+        },
+        "refMap": {
+            "@id": "fiware:refMap",
+            "@type": "xs:anyURI"
+        },
+        "refParkingAccess": {
+            "@id": "fiware:refParkingAccess",
+            "@type": "@id"
+        },
+        "refParkingGroup": {
+            "@id": "fiware:refParkingGroup",
+            "@type": "@id"
+        },
+        "refParkingSite": {
+            "@id": "fiware:refParkingSite",
+            "@type": "@id"
+        },
+        "refParkingSpot": {
+            "@id": "fiware:refParkingSpot",
+            "@type": "@id"
+        },
+        "refPointOfInterest": {
+            "@id": "fiware:refPointOfInterest",
+            "@type": "@id"
+        },
+        "relativeHumidity": {
+            "@id": "fiware:relativeHumidity",
+            "@type": "xsd:number"
+        },
+        "relativeHumidityForecast": {
+            "@id": "fiware:relativeHumidityForecast",
+            "@type": "xsd:number"
+        },
+        "requiredPermit": {
+            "@id": "fiware:requiredPermit",
+            "@type": "xsd:array"
+        },
+        "reservationType": {
+            "@id": "fiware:reservationType",
+            "@type": "xsd:array"
+        },
+        "rssi": {
+            "@id": "fiware:rssi",
+            "@type": "xsd:string"
+        },
+        "salinity": "https://w3id.org/saref#salinity",
+        "security": {
+            "@id": "fiware:security",
+            "@type": "xsd:array"
+        },
+        "seeAlso": {
+            "@id": "fiware:seeAlso",
+            "@type": "xsd:undefined"
+        },
+        "selfConsumption": {
+            "@id": "fiware:selfConsumption",
+            "@type": "xsd:boolean"
+        },
+        "sensor": "https://w3id.org/saref#sensor",
+        "serialNumber": {
+            "@id": "fiware:serialNumber",
+            "@type": "xsd:string"
+        },
+        "smoke": "https://w3id.org/saref#smoke",
+        "snowHeight": {
+            "@id": "fiware:snowHeight",
+            "@type": "xsd:number"
+        },
+        "softwareVersion": {
+            "@id": "fiware:softwareVersion",
+            "@type": "xsd:string"
+        },
+        "soilMoisture": "https://w3id.org/saref#soilMoisture",
+        "solarRadiation": "https://w3id.org/saref#solarRadiation",
+        "source": {
+            "@id": "fiware:source",
+            "@type": "xsd:string"
+        },
+        "specialLocation": {
+            "@id": "fiware:specialLocation",
+            "@type": "xsd:array"
+        },
+        "speed": "https://w3id.org/saref#speed",
+        "stateName": {
+            "@id": "fiware:stateName",
+            "@type": "xsd:string"
+        },
+        "status": {
+            "@id": "fiware:status",
+            "@type": "xsd:string"
+        },
+        "streamGauge": {
+            "@id": "fiware:streamGauge",
+            "@type": "xsd:number"
+        },
+        "streetAddress": {
+            "@id": "schema:streetAddress",
+            "@type": "xsd:string"
+        },
+        "supportedProtocol": {
+            "@id": "fiware:supportedProtocol",
+            "@type": "@vocab"
+        },
+        "tds": "https://w3id.org/saref#tds",
+        "temperature": "https://w3id.org/saref#temperature",
+        "timeInstant": {
+            "@id": "fiware:timeInstant",
+            "@type": "xs:dateTime"
+        },
+        "totalSlotNumber": {
+            "@id": "fiware:totalSlotNumber",
+            "@type": "xsd:number"
+        },
+        "totalSpotNumber": {
+            "@id": "fiware:totalSpotNumber",
+            "@type": "xsd:number"
+        },
+        "trafficFlow": "https://w3id.org/saref#trafficFlow",
+        "tss": "https://w3id.org/saref#tss",
+        "turbidity": "https://w3id.org/saref#turbidity",
+        "twoWheelerSlots": "fiware:twoWheelerSlots",
+        "uVIndexMax": {
+            "@id": "fiware:uVIndexMax",
+            "@type": "xsd:number"
+        },
+        "ulbName": {
+            "@id": "fiware:ulbName",
+            "@type": "xsd:string"
+        },
+        "unclassifiedSlots": "fiware:unclassifiedSlots",
+        "usageScenario": {
+            "@id": "fiware:usageScenario",
+            "@type": "xsd:array"
+        },
+        "value": {
+            "@id": "fiware:value",
+            "@type": "xsd:string"
+        },
+        "vehicleEntranceCount": {
+            "@id": "fiware:vehicleEntranceCount",
+            "@type": "xsd:number"
+        },
+        "vehicleExitCount": {
+            "@id": "fiware:vehicleExitCount",
+            "@type": "xsd:number"
+        },
+        "visibility": {
+            "@id": "fiware:visibility",
+            "@type": "xsd:undefined"
+        },
+        "wardId": {
+            "@id": "fiware:wardId",
+            "@type": "xsd:string"
+        },
+        "wardName": {
+            "@id": "fiware:wardName",
+            "@type": "xsd:string"
+        },
+        "wardNum": {
+            "@id": "fiware:wardNum",
+            "@type": "xsd:number"
+        },
+        "waterConsumption": "https://w3id.org/saref#waterConsumption",
+        "waterPollution": "https://w3id.org/saref#waterPollution",
+        "weatherConditions": "https://w3id.org/saref#weatherConditions",
+        "weatherType": {
+            "@id": "fiware:weatherType",
+            "@type": "xsd:string"
+        },
+        "weight": "https://w3id.org/saref#weight",
+        "width": {
+            "@id": "fiware:width",
+            "@type": "xsd:number"
+        },
+        "windDirection": "https://w3id.org/saref#windDirection",
+        "windSpeed": "https://w3id.org/saref#windSpeed",
+        "zoneId": {
+            "@id": "fiware:zoneId",
+            "@type": "xsd:string"
+        },
+        "zoneName": {
+            "@id": "fiware:zoneName",
+            "@type": "xsd:string"
+        }
+    },
+    "@graph": [
+        {
+            "@id": "fiware:ParkingSpot",
+            "@type": "rdfs:Class",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A parking spot is an area well delimited where one vehicle can be parked."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "ParkingSpot"
+                }
+            ],
+            "rdfs:subClassOf": {
+                "@id": "schema:Thing"
+            }
+        },
+        {
+            "@id": "fiware:OffStreetParking",
+            "@type": "rdfs:Class",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Off street parking"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "OffStreetParking"
+                }
+            ],
+            "rdfs:subClassOf": {
+                "@id": "schema:Thing"
+            }
+        },
+        {
+            "@id": "fiware:WeatherObserved",
+            "@type": "rdfs:Class",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "An observation of weather conditions at a certain place and time. This data model has been developed in cooperation with mobile operators and the GSMA."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "WeatherObserved"
+                }
+            ],
+            "rdfs:subClassOf": {
+                "@id": "schema:Thing"
+            }
+        },
+        {
+            "@id": "fiware:GreenEnergyGenerator",
+            "@type": "rdfs:Class",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A generic generator station which can generate energy from green energy"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "GreenEnergyGenerator"
+                }
+            ],
+            "rdfs:subClassOf": {
+                "@id": "schema:Thing"
+            }
+        },
+        {
+            "@id": "fiware:EnergyConsumer",
+            "@type": "rdfs:Class",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Adapted from CIM data models. Generic user of energy - a  point of consumption on the power system model."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "EnergyConsumer"
+                }
+            ],
+            "rdfs:subClassOf": {
+                "@id": "schema:Thing"
+            }
+        },
+        {
+            "@id": "fiware:Building",
+            "@type": "rdfs:Class",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "This entity contains a harmonised description of a Building. This entity is associated with the vertical segments of smart homes, smart cities, industry and related IoT applications.\nThis data model has been partially developed in cooperation with mobile operators and the [GSMA](https://www.gsma.com/iot/iot-big-data/), compared to GSMA data model following changes are introduced:\n-   the reference to `BuildingType` is removed, since `BuildingType` compared to\n    `category` attribute does not introduce significant information.\n\n-   `category` attribute is required.\n-   `openingHours` is introduced following schema.org data model to allow\n    fine-grained on building opening times. GSMA supported this as free text in\n    the `notes` attribute (removed as well).\n\n-   `refSubscriptionService` is not supported, since `SubscriptionService` model\n    is not supported currently.\n\n## Data Model\nFor a full description of the following attributes refer to GSMA [IoT Big Data Harmonised Data Model](https://github.com/GSMADeveloper/NGSI-LD-Entities)"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "Building"
+                }
+            ],
+            "rdfs:subClassOf": {
+                "@id": "schema:Thing"
+            }
+        },
+        {
+            "@id": "fiware:Device",
+            "@type": "rdfs:Class",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "An apparatus (hardware + software + firmware) intended to accomplish a particular task (sensing the environment, actuating, etc.). A Device is a tangible object which contains some logic and is producer and/or consumer of data. A Device is always assumed to be capable of communicating electronically via a network.\nThis data model has been partially developed in cooperation with mobile operators and the [GSMA](https://www.gsma.com/iot/iot-big-data/).\nThis data model reuses concepts coming from the [SAREF Ontology](http://www.etsi.org/deliver/etsi_ts/103200_103299/103264/01.01.01_60/ts_103264v010101p.pdf) part of [ETSI](http://www.etsi.org) standards."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "Device"
+                }
+            ],
+            "rdfs:subClassOf": {
+                "@id": "schema:Thing"
+            }
+        },
+        {
+            "@id": "fiware:address",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The mailing address"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "address"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:alternateName",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "An alternative name for this item"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "alternateName"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:annotations",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Annotations about the item"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "annotations"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:areaServed",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The geographic area where a service or offered item is provided"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "areaServed"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:category",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Category(ies) of the parking spot. `onStreet` : The parking spot belongs to an onStreet parking site. `offStreet` : The parking spot belongs to an offStreet parking site."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "category"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:color",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The color of the product"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "color"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:dataProvider",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A sequence of characters identifying the provider of the harmonised data entity."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "dataProvider"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:dateCreated",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Entity creation timestamp. This will usually be allocated by the storage platform."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "dateCreated"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:dateModified",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Timestamp of the last modification of the entity. This will usually be allocated by the storage platform."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "dateModified"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:description",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A description of this item"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "description"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:id",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Unique identifier of the entity"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "id"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:image",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "An image of the item"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "image"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:length",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Length of the parking spot."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "length"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:location",
+            "@type": "ngsi-ld:Geoproperty",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Geojson reference to the item. It can be Point, LineString, Polygon, MultiPoint, MultiLineString or MultiPolygon"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "location"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:name",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The name of this item."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "name"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:owner",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A List containing a JSON encoded sequence of characters referencing the unique Ids of the owner(s)"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "owner"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:refDevice",
+            "@type": "ngsi-ld:Relationship",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The device representing the physical sensor used to monitor this parking spot."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "refDevice"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:refParkingGroup",
+            "@type": "ngsi-ld:Relationship",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Group to which the parking spot belongs to. For model simplification purposes only one group is allowed per parking spot."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "refParkingGroup"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:refParkingSite",
+            "@type": "ngsi-ld:Relationship",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Parking site to which the parking spot belongs to."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "refParkingSite"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:seeAlso",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "list of uri pointing to additional resources about the item"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "seeAlso"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:source",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A sequence of characters giving the original source of the entity data as a URL. Recommended to be the fully qualified domain name of the source provider, or the URL to the source object."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "source"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:timeInstant",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Timestamp of the payload . There can be production environments where the attribute type is equal to the `ISO8601` string. If so, it must be considered as a synonym of `DateTime`. This attribute is kept for backwards compatibility with old FIWARE reference implementations."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "timeInstant"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:width",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Width of the parking spot."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "width"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:acceptedPaymentMethod",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Enum:'ByBankTransferInAdvance, ByInvoice, Cash, CheckInAdvance, COD, DirectDebit, GoogleCheckout, PayPal, PaySwarm'. Accepted payment method(s)."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "acceptedPaymentMethod"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:accessModified",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Timestamp when `vehicleEntranceCount` and `vehicleExitCount` was updated. Allowed values: ISO8601"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "accessModified"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:address",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The mailing address"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "address"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:aggregateRating",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Aggregated rating for this parking site."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "aggregateRating"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:allowedVehicleType",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Vehicle type(s) allowed. The first element of this array _MUST_ be the principal vehicle type allowed. Free spot numbers of other allowed vehicle types might be reported under the attribute `extraSpotNumber` and through specific entities of type _ParkingGroup_. The following values defined by _VehicleTypeEnum_, [DATEX 2 version 2.3](http://d2docs.ndwcloud.nu/downloads/modelv23.html). Enum:'agriculturalVehicle, anyVehicle, bicycle, bus, car, caravan, carWithCaravan, carWithTrailer, constructionOrMaintenanceVehicle, lorry, moped, motorcycle, motorcycleWithSideCar, motorscooter, tanker, trailer, van'"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "allowedVehicleType"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:alternateName",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "An alternative name for this item"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "alternateName"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:areaServed",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The geographic area where a service or offered item is provided"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "areaServed"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:availableSpotNumber",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The number of spots available (_including_ all  vehicle types or reserved spaces, such as those for disabled people, long term parkers and so on). This might be harder to estimate at those parking locations on which spots borders are not clearly marked by lines. Allowed values: A positive integer number, including 0. It must lower or equal than `totalSpotNumber`."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "availableSpotNumber"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:averageSpotLength",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The average length of parking spots."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "averageSpotLength"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:averageSpotWidth",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The average width of parking spots."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "averageSpotWidth"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:category",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Parking site's category(ies). The purpose of this field is to allow to tag, generally speaking, off street parking entities"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "category"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:chargeType",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Type(s) of charge performed by the parking site. Allowed values: Some of those defined by the DATEX II version 2.3 _ ChargeTypeEnum_ enumeration. Enum:'additionalIntervalPrice, annualPayment, firstIntervalPrice, flat, free, minimum, maximum, monthlyPayment, other, seasonTicket, temporaryPrice'. Or any other application-specific"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "chargeType"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:contactPoint",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Parking site contact point."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "contactPoint"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:dataProvider",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A sequence of characters identifying the provider of the harmonised data entity."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "dataProvider"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:dateCreated",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Entity creation timestamp. This will usually be allocated by the storage platform."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "dateCreated"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:dateModified",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Timestamp of the last modification of the entity. This will usually be allocated by the storage platform."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "dateModified"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:description",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A description of this item"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "description"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:extCategory",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "External category to complement category."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "extCategory"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:extraSpotNumber",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The number of extra spots _available_, i.e. free. This value must aggregate free spots from all groups mentioned below: A/ Those reserved for special purposes and usually require a permit. Permit details will be found at parking group level (entity of type `ParkingGroup`). B/ Those reserved for other vehicle types different than the principal allowed vehicle type. C/ Any other group of parking spots not subject to the general condition rules conveyed by this entity."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "extraSpotNumber"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:facilities",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Allowed values: The following defined by the _EquipmentTypeEnum_ enumeration of DATEX II version 2.3. Enum:'bikeParking, cashMachine, copyMachineOrService, defibrillator, dumpingStation, electricChargingStation, elevator, faxMachineOrService, fireHose, fireExtinguisher, fireHydrant, firstAidEquipment, freshWater, iceFreeScaffold, informationPoint, internetWireless, luggageLocker, payDesk, paymentMachine, playground, publicPhone, refuseBin, safeDeposit, shower, toilet, tollTerminal, vendingMachine, wasteDisposal' . Any other application-specific"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "facilities"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:firstAvailableFloor",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Number of the floor closest to the ground which currently has available parking spots. Allowed values: Stories are numbered between -n and n, being 0 ground floor."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "firstAvailableFloor"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:fourWheelerSlots",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Four wheeler parking spot availability status in parking site corresponding to this observation."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "fourWheelerSlots"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:highestFloor",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "For parking sites with multiple floor levels, highest floor. An integer number. 0 is ground level. Upper floors are positive numbers. Lower floors are negative ones."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "highestFloor"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:id",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Unique identifier of the entity"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "id"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:images",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A URL containing a photo of this parking site"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "images"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:layout",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Parking layout. Gives more details to the `category` attribute. Allowed values: As per the _ParkingLayoutEnum_ of DATEX II version 2.3. Enum:'automatedParkingGarage, carports, covered, field, garageBoxes, multiLevel, multiStorey, nested, openSpace, rooftop, sheds, singleLevel, surface, other'. See also [OpenStreetMap](http://wiki.openstreetmap.org/wiki/Tag:amenity%3Dparking). Or any other value useful for the application and not covered above."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "layout"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:location",
+            "@type": "ngsi-ld:Geoproperty",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Geojson reference to the item. It can be Point, LineString, Polygon, MultiPoint, MultiLineString or MultiPolygon"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "location"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:lowestFloor",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "For parking sites with multiple floor levels, lowest floor. Allowed values: An integer number."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "lowestFloor"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:maximumAllowedHeight",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Maximum allowed height for vehicles. If there are multiple zones, it will be the minimum height of all the zones."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "maximumAllowedHeight"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:maximumAllowedWidth",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Maximum allowed width for vehicles. If there are multiple zones, it will be the minimum width of all the zones."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "maximumAllowedWidth"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:maximumParkingDuration",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Maximum allowed stay at site, on a general basis, encoded as a ISO8601 duration or with any other string relevant for parking.  An empty value or when non present indicates an indefinite duration"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "maximumParkingDuration"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:measuresPeriod",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The measures period related to availableSpotNumber and priceRatePerMinute."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "measuresPeriod"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:measuresPeriodUnit",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The measures period unit related to availableSpotNumber and PriceRatePerMinute."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "measuresPeriodUnit"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:municipalityInfo",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Municipality information corresponding to this observation."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "municipalityInfo"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:name",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The name of this item."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "name"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:observationDateTime",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Last reported time of observation."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "observationDateTime"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:occupancy",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Relative value of occupied spots out of the total spots."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "occupancy"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:occupancyDetectionType",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Occupancy detection method(s).  Allowed values: The following from DATEX II version 2.3 _OccupancyDetectionTypeEnum_. Enum:'balancing, manual, modelBased, none, singleSpaceDetection'. Or any other application-specific"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "occupancyDetectionType"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:occupancyModified",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Relative value of occupied spots out of the total spots. Allowed values: 0 - 1"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "occupancyModified"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:occupiedSpotNumber",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Number of spots occupied. Allowed values: 0 - `totalSpotNumber`"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "occupiedSpotNumber"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:openingHours",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Opening hours of the parking site."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "openingHours"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:outOfServiceSlotNumber",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The number of bike racks/bike-docking slots or parking slots that are out of order and cannot be used to hire or park a bike in the bike docking station or parking site corresponding to this observation."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "outOfServiceSlotNumber"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:owner",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A List containing a JSON encoded sequence of characters referencing the unique Ids of the owner(s)"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "owner"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:parkingMode",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Parking mode(s). Allowed values: Those defined by the DATEX II version 2.3 _ParkingModeEnum_ enumeration. Enum:'echelonParking, parallelParking, perpendicularParking'"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "parkingMode"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:parkingSiteId",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The unique ID of the parking site or parking lot corresponding to this observation."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "parkingSiteId"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:priceCurrency",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Price currency of price rate per minute"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "priceCurrency"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:priceRatePerMinute",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Price rate per minute."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "priceRatePerMinute"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:provider",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Parking site service provider"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "provider"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:refParkingAccess",
+            "@type": "ngsi-ld:Relationship",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Parking site's access point(s)."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "refParkingAccess"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:refParkingGroup",
+            "@type": "ngsi-ld:Relationship",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Parking site identified group(s). A group can correspond to a zone, a complete storey, a group of spots, etc."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "refParkingGroup"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:refParkingSpot",
+            "@type": "ngsi-ld:Relationship",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Individual parking spots belonging to this offStreet parking site."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "refParkingSpot"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:requiredPermit",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "This attribute captures what permit(s) might be needed to park at this site. Semantics is that at least _one of_ these permits is needed to park. When a permit is composed by more than one item (and) they can be combined with a ','. For instance 'residentPermit,disabledPermit' stays that both, at the same time, a resident and a disabled permit are needed to park. If the list is empty no permit is needed. Allowed values: The following, defined by the _PermitTypeEnum_ enumeration of DATEX II version 2.3. Enum:'employeePermit, fairPermit, governmentPermit, noPermitNeeded, residentPermit, specificIdentifiedVehiclePermit, studentPermit, visitorPermit'. Or any other application-specific"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "requiredPermit"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:reservationType",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "he following specified by _ReservationTypeEnum_ of DATEX II version 2.3. Enum:'mandatory, notAvailable, optional, partly'"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "reservationType"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:security",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Security aspects provided by this parking site. Allowed values: The following, some of them, defined by _ParkingSecurityEnum_ of DATEX II version 2.3. Enum:'areaSeparatedFromSurroundings, cctv, dog, externalSecurity, fences, floodLight, guard24hours, lighting, patrolled, securityStaff' . or any other application-specific"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "security"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:seeAlso",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "list of uri pointing to additional resources about the item"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "seeAlso"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:source",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A sequence of characters giving the original source of the entity data as a URL. Recommended to be the fully qualified domain name of the source provider, or the URL to the source object."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "source"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:specialLocation",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "If the parking site is at a special location (airport, department store, etc.) it conveys what is such special location.  Allowed values: Those defined by _ParkingSpecialLocationEnum_ of [DATEX II version 2.3](http://www.datex2.eu/content/parking-publications-extension-v10a). Enum:'airportTerminal, cableCarStation, campground, cinema, coachStation, conventionCentre, exhibitionCentre, ferryTerminal, hotel, market, publicTransportStation, religiousCentre, shoppingCentre, skilift, specificFacility, themePark, trainStation, vehicleOnRailTerminal, other'"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "specialLocation"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:status",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Status of the parking site. Allowed values: The following defined by the following enumerations defined by DATEX II version 2.3. Enum:'almostFull, closed, closedAbnormal, full, fullAtEntrance, open, openingTimesInForce, spacesAvailable'. Or any other application-specific"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "status"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:totalSpotNumber",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The total number of spots offered by this parking site.  This number can be difficult to be obtained for those parking locations on which spots are not clearly marked by lines. Allowed values: Any positive integer number or 0. Normative references: DATEX 2 version 2.3 attribute _parkingNumberOfSpaces_ of the _ParkingRecord_ class."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "totalSpotNumber"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:twoWheelerSlots",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Two wheeler parking spot availability status in parking site corresponding to this observation."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "twoWheelerSlots"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:unclassifiedSlots",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Unclassified vehicles or other vehicles parking spot availability status in parking site corresponding to this observation."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "unclassifiedSlots"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:usageScenario",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Usage scenario(s). Gives more details to the `category` attribute. Allowed values: Those defined by the enumeration _ParkingUsageScenarioEnum_ of DATEX II version 2.3. Enum:'automaticParkingGuidance, carSharing, dropOffWithValet, dropOffMechanical, dropOff, eventParking, kissAndRide, liftShare, loadingBay, overnightParking, parkAndCycle, parkAndRide, parkAndWalk, restArea, serviceArea, staffGuidesToSpace, truckParking, vehicleLift, other'. Or any other value useful for the application and not covered above."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "usageScenario"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:vehicleEntranceCount",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Aggregated number of vehicle that enter the parking site in a period of time."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "vehicleEntranceCount"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:vehicleExitCount",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Aggregated number of vehicle that leave the parking site in a period of time."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "vehicleExitCount"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:address",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The mailing address"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "address"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:airQualityIndex",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Air quality index is a number used to report the quality of the air on any given day."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "airQualityIndex"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:airQualityIndexForecast",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Forecasted overall Air Quality Index (AQI) over a certain duration in future."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "airQualityIndexForecast"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:airTemperatureForecast",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Forecasted value of air temperature over a certain duration in future."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "airTemperatureForecast"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:airTemperatureTSA",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Object defining the temporal processing of a basic property during a period. It provides Maximum, minimum, instant value and average"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "airTemperatureTSA"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:alternateName",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "An alternative name for this item"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "alternateName"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:aqiMajorPollutant",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Major pollutant in the Air Quality Index (AQI)."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "aqiMajorPollutant"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:aqiMajorPollutantForecast",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Forecasted major air pollutant in the Air Quality Index (AQI) over a certain duration in future."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "aqiMajorPollutantForecast"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:areaServed",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The geographic area where a service or offered item is provided"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "areaServed"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:atmosphericPressure",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The atmospheric pressure observed measured in Hecto Pascals"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "atmosphericPressure"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:dataProvider",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A sequence of characters identifying the provider of the harmonised data entity."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "dataProvider"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:dateCreated",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Entity creation timestamp. This will usually be allocated by the storage platform."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "dateCreated"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:dateModified",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Timestamp of the last modification of the entity. This will usually be allocated by the storage platform."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "dateModified"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:dateObserved",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Date of the observed entity defined by the user."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "dateObserved"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:description",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A description of this item"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "description"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:dewPoint",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The dew point encoded as a number. Observed temperature to which air must be cooled to become saturated with water vapor"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "dewPoint"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:feelLikesTemperature",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Temperature appreciation of the item"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "feelLikesTemperature"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:feelsLikesTemperature",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Temperature appreciation of the item"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "feelsLikesTemperature"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:gustSpeed",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A sudden burst of high-speed wind over the observed average wind speed lasting only for a few seconds."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "gustSpeed"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:id",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Unique identifier of the entity"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "id"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:illuminance",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Observed instantaneous ambient light intensity"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "illuminance"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:location",
+            "@type": "ngsi-ld:Geoproperty",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Geojson reference to the item. It can be Point, LineString, Polygon, MultiPoint, MultiLineString or MultiPolygon"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "location"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:name",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The name of this item."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "name"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:owner",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A List containing a JSON encoded sequence of characters referencing the unique Ids of the owner(s)"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "owner"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:precipitation",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Amount of water rain registered. Unis:'Liters per square meter'."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "precipitation"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:precipitationForecast",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Forecasted rainfall over a certain duration in future."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "precipitationForecast"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:pressureTendency",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Enum:'falling, raising, steady'. Is the pressure rising or falling? It can be expressed in quantitative terms or qualitative terms."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "pressureTendency"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:refDevice",
+            "@type": "ngsi-ld:Relationship",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A reference to the device(s) which captured this observation."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "refDevice"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:refPointOfInterest",
+            "@type": "ngsi-ld:Relationship",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Point of interest related to the item"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "refPointOfInterest"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:relativeHumidity",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Humidity in the Air. Observed instantaneous relative humidity (water vapour in air)"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "relativeHumidity"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:relativeHumidityForecast",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Forecasted relative humidity (water vapour in air) over a certain duration in future"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "relativeHumidityForecast"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:seeAlso",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "list of uri pointing to additional resources about the item"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "seeAlso"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:snowHeight",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The snow height observed by generic snow depth measurement sensors, expressed in centimeters"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "snowHeight"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:solarRadiation",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The solar radiation observed measured in Watts per square"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "solarRadiation"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:source",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A sequence of characters giving the original source of the entity data as a URL. Recommended to be the fully qualified domain name of the source provider, or the URL to the source object."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "source"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:streamGauge",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The water level surface elevation observed by Hydrometric measurement sensors, namely a [Stream Gauge](https://en.wikipedia.org/wiki/Stream_gauge) expressed in centimeters"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "streamGauge"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:temperature",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Temperature of the item"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "temperature"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:uVIndexMax",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The maximum UV index for the period, based on the World Health Organization's UV Index measure. [http://www.who.int/uv/intersunprogramme/activities/uv_index/en/](http://www.who.int/uv/intersunprogramme/activities/uv_index/en/) the values between 1 and 11 are the valid range for the index. The value 0 is for describing that no signal is detected so no value is stored."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "uVIndexMax"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:visibility",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Categories of visibility"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "visibility"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:weatherType",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Text description of the weather"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "weatherType"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:windDirection",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Direction of the wind bet"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "windDirection"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:windSpeed",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Intensity of the wind"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "windSpeed"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:address",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The mailing address"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "address"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:alternateName",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "An alternative name for this item"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "alternateName"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:areaServed",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The geographic area where a service or offered item is provided"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "areaServed"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:dataProvider",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A sequence of characters identifying the provider of the harmonised data entity."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "dataProvider"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:dateCreated",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Entity creation timestamp. This will usually be allocated by the storage platform."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "dateCreated"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:dateModified",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Timestamp of the last modification of the entity. This will usually be allocated by the storage platform."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "dateModified"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:description",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A description of this item"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "description"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:generationSources",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A list of sources used for power generation. Enum:'biomass, eolic, geothermal, hydropower, solar'"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "generationSources"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:id",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Unique identifier of the entity"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "id"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:location",
+            "@type": "ngsi-ld:Geoproperty",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Geojson reference to the item. It can be Point, LineString, Polygon, MultiPoint, MultiLineString or MultiPolygon"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "location"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:maxBiomassMeasure",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A measure of maximum biomass energy that can be generated. The unit code (text) of measurement given using the UN/CEFACT Common Code (max. 3 characters)."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "maxBiomassMeasure"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:maxEolicPowerMeasure",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A measure of maximum eolic energy that can be generated. The unit code (text) of measurement given using the UN/CEFACT Common Code (max. 3 characters)."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "maxEolicPowerMeasure"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:maxGeothermalPowerGenerated",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A measure of maximum geothermal energy that can be generated. The unit code (text) of measurement given using the UN/CEFACT Common Code (max. 3 characters)."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "maxGeothermalPowerGenerated"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:maxHydroPowerMeasure",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A measure of maximum hydropower energy that can be generated. The unit code (text) of measurement given using the UN/CEFACT Common Code (max. 3 characters)."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "maxHydroPowerMeasure"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:maxSolarPowerMeasure",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A measure of maximum solar energy that can be generated. The unit code (text) of measurement given using the UN/CEFACT Common Code (max. 3 characters)."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "maxSolarPowerMeasure"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:name",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The name of this item."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "name"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:owner",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A List containing a JSON encoded sequence of characters referencing the unique Ids of the owner(s)"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "owner"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:redistribution",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Indicates whether the generated energy will be dumped into the network"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "redistribution"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:seeAlso",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "list of uri pointing to additional resources about the item"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "seeAlso"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:selfConsumption",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Indicate whether energy generated will use for self"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "selfConsumption"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:source",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A sequence of characters giving the original source of the entity data as a URL. Recommended to be the fully qualified domain name of the source provider, or the URL to the source object."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "source"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:type",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "NGSI Entity Type: It has to be GreenEnergyGenerator"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "type"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:LoadDynamics",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Load dynamics model used to describe dynamic behavior of this energy consumer. Default: None"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "LoadDynamics"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:LoadResponse",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The load response characteristic of this load.  If missing, this load is assumed to be constant power. Default: None"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "LoadResponse"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:address",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The mailing address"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "address"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:alternateName",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "An alternative name for this item"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "alternateName"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:areaServed",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The geographic area where a service or offered item is provided"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "areaServed"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:dataProvider",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A sequence of characters identifying the provider of the harmonised data entity."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "dataProvider"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:dateCreated",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Entity creation timestamp. This will usually be allocated by the storage platform."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "dateCreated"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:dateModified",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Timestamp of the last modification of the entity. This will usually be allocated by the storage platform."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "dateModified"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:description",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A description of this item"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "description"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:id",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Unique identifier of the entity"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "id"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:location",
+            "@type": "ngsi-ld:Geoproperty",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Geojson reference to the item. It can be Point, LineString, Polygon, MultiPoint, MultiLineString or MultiPolygon"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "location"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:name",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The name of this item."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "name"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:owner",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A List containing a JSON encoded sequence of characters referencing the unique Ids of the owner(s)"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "owner"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:p",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Active power of the load. Load sign convention is used, i.e. positive sign means flow out from a node. For voltage dependent loads the value is at rated voltage. Starting value for a steady state solution. Default: 0.0"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "p"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:pfixed",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Active power of the load that is a fixed quantity. Load sign convention is used, i.e. positive sign means flow out from a node. Default: 0.0"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "pfixed"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:pfixedPct",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Fixed active power as per cent of load group fixed active power. Load sign convention is used, i.e. positive sign means flow out from a node. Default: 0.0"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "pfixedPct"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:q",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Reactive power of the load. Load sign convention is used, i.e. positive sign means flow out from a node. For voltage dependent loads the value is at rated voltage. Starting value for a steady state solution. Default: 0.0"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "q"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:qfixed",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Reactive power of the load that is a fixed quantity. Load sign convention is used, i.e. positive sign means flow out from a node. Default: 0.0"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "qfixed"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:qfixedPct",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Fixed reactive power as per cent of load group fixed reactive power. Load sign convention is used, i.e. positive sign means flow out from a node. Default: 0.0"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "qfixedPct"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:seeAlso",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "list of uri pointing to additional resources about the item"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "seeAlso"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:source",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A sequence of characters giving the original source of the entity data as a URL. Recommended to be the fully qualified domain name of the source provider, or the URL to the source object."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "source"
+                }
+            ]
+        },
+        {
+            "@id": "schema:address",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The mailing address."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "address"
+                }
+            ]
+        },
+        {
+            "@id": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dcategory",
+            "@type": "ngsi-ld:EnumProperty",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The categories that this building belongs to"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "category"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:containedInPlace",
+            "@type": "ngsi-ld:Relationship",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The URL this building resides within"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "containedInPlace"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:dataProvider",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Specifies the URL to information about the provider of this information"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "dataProvider"
+                }
+            ]
+        },
+        {
+            "@id": "ngsi-ld:description",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A description of the item"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "description"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:floorsAboveGround",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Number of floors above ground within the building"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "floorsAboveGround"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:floorsBelowGround",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Number of floors below ground within the building"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "floorsBelowGround"
+                }
+            ]
+        },
+        {
+            "@id": "ngsi-ld:location",
+            "@type": "ngsi-ld:GeoProperty",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The current location of the item"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "location"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:occupier",
+            "@type": "ngsi-ld:Relationship",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Link to the occupiers of the building"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "occupier"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:openingHours",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": ""
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "openingHours"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:owner",
+            "@type": "ngsi-ld:Relationship",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The owner of this building"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "owner"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:refMap",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The URL holding a map of the building"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "refMap"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:source",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A sequence of characters giving the source of the entity data."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "source"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:batteryLevel",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Device's battery level. It must be equal to `1.0` when battery is full. `0.0` when battery ìs empty. `-1` when transiently cannot be determined.\n-  Allowed values: Interval \\[0,1\\] and -1"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "batteryLevel"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:category",
+            "@type": "ngsi-ld:EnumProperty",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "See attribute `category` from [DeviceModel](../../DeviceModel/doc/spec.md). Optional but recommended to optimize queries."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "category"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:configuration",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Device's technical configuration. This attribute is intended to be a dictionary of properties which capture parameters which have to do with the configuration of a device (timeouts, reporting periods, etc.) and which are not currently covered by the standard attributes defined by this model."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "configuration"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:controlledAsset",
+            "@type": "ngsi-ld:Relationship",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The asset(s) (building, object, etc.) controlled by the device."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "controlledAsset"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:controlledProperty",
+            "@type": "ngsi-ld:EnumProperty",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "See attribute `controlledProperty` from [DeviceModel](../../DeviceModel/doc/spec.md). Optional but recommended to optimize queries."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "controlledProperty"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:dataProvider",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Specifies the URL to information about the provider of this information"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "dataProvider"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:dateFirstUsed",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A timestamp which denotes when the device was first used."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "dateFirstUsed"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:dateInstalled",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A timestamp which denotes when the device was installed"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "dateInstalled"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:dateLastCalibration",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A timestamp which denotes when the last calibration of the device happened."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "dateLastCalibration"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:dateLastValueReported",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A timestamp which denotes the last time when the\n device successfully reported data to the cloud."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "dateLastValueReported"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:dateManufactured",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A timestamp which denotes when the device was manufactured."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "dateManufactured"
+                }
+            ]
+        },
+        {
+            "@id": "ngsi-ld:description",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A description of the item"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "description"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:deviceState",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "State of this device from an operational point of view. Its\n value can be vendor dependent."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "deviceState"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:firmwareVersion",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The firmware version of this device."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "firmwareVersion"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:hardwareVersion",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The hardware version of this device."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "hardwareVersion"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:ipAddress",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The IP address of the device. It can be a comma separated list of values if the device has more than one IP address."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "ipAddress"
+                }
+            ]
+        },
+        {
+            "@id": "ngsi-ld:location",
+            "@type": "ngsi-ld:GeoProperty",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The current location of the item"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "location"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:macAddress",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The MAC address of the device."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "macAddress"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:mcc",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Mobile Country Code - This property identifies univoquely the country of the mobile network the device is attached to."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "mcc"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:mnc",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "This property identifies the Mobile Network Code (MNC) of the network the device is attached to. The MNC is used in combination with a Mobile Country Code (MCC) (also known as a \"MCC / MNC tuple\") to uniquely identify a mobile phone operator/carrier using the GSM, CDMA, iDEN, TETRA and 3G / 4G public land mobile networks and some satellite mobile"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "mnc"
+                }
+            ]
+        },
+        {
+            "@id": "ngsi-ld:name",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A mnemonic name given to the device."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "name"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:osVersion",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The version of the host operating system device."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "osVersion"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:owner",
+            "@type": "ngsi-ld:Relationship",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The owners of a Device."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "owner"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:provider",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The provider of the device."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "provider"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:refDeviceModel",
+            "@type": "ngsi-ld:Relationship",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The device's model."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "refDeviceModel"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:rssi",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Received signal strength indicator for a wireless enabled device. It must be equal to `1.0` when the signal strength is maximum. `0.0` when signal is missing. `-1.0` when it cannot be determined.\n-  Allowed values: Interval \\[0,1\\] and -1"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "rssi"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:serialNumber",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The serial number assigned by the manufacturer. see [https://schema.org/serialNumber](https://schema.org/serialNumber)"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "serialNumber"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:softwareVersion",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "The software version of this device."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "softwareVersion"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:source",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A sequence of characters giving the source of the entity data."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "source"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:supportedProtocol",
+            "@type": "ngsi-ld:EnumProperty",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "See attribute `supportedProtocol` from [DeviceModel](../../DeviceModel/doc/spec.md). Needed if due to a software update new protocols are supported. Otherwise it is better to convey it at `DeviceModel` level."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "supportedProtocol"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:value",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A observed or reported value. For actuator devices, it is an attribute that allows a controlling application to change the actuation setting. For instance, a switch device which is currently _on_ can report a value `\"on\"`of type `Text`. Obviously, in order to toggle the referred switch, this attribute value will have to be changed to `\"off\"`."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "value"
+                }
+            ]
+        }
+    ]
+}
