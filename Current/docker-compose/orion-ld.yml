@@ -16,7 +16,7 @@
 # 
 # see: https://github.com/FIWARE/helm-charts/
 #
-version: "3.5"
+version: "3.8"
 services:
   # @context file is served from here
   ld-context:
@@ -27,7 +27,7 @@ services:
     ports:
       - "3004:80"
     volumes:
-      - ../data-models:/usr/local/apache2/htdocs/
+      - data-models:/usr/local/apache2/htdocs/
     networks:
       - default
 
@@ -68,6 +68,7 @@ services:
       - "${IOTA_NORTH_PORT}"
     ports:
       - "${IOTA_NORTH_PORT}:${IOTA_NORTH_PORT}" # localhost:4041
+      - "${IOTA_SOUTH_PORT}:${IOTA_SOUTH_PORT}" # localhost:7896
     environment:
       - IOTA_CB_HOST=orion # name of the context broker to update context
       - IOTA_CB_PORT=${ORION_LD_PORT} # port the context broker listens on to update context
@@ -113,7 +114,8 @@ services:
     networks:
       - default
     volumes:
-      - mongo-db:/data
+      - mongo-db:/data/db
+      - mongo-config:/data/configdb
     healthcheck:
       test: |
         host=`hostname --ip-address || echo '127.0.0.1'`; 
@@ -140,44 +142,50 @@ services:
       - default
 
 
-  #Timescale Database
-  timescale:
-    image: timescale/timescaledb-postgis:${TIMESCALE_VERSION}
-    hostname: timescale
-    container_name: db-timescale
-    restart: always
-    ports:
-      - "5432:5432"
-    environment:
-      - POSTGRES_PASSWORD=*
-    networks:
-      - default
+  # #Timescale Database
+  # timescale:
+  #   image: timescale/timescaledb-postgis:${TIMESCALE_VERSION}
+  #   hostname: timescale
+  #   container_name: db-timescale
+  #   restart: always
+  #   ports:
+  #     - "5432:5432"
+  #   environment:
+  #     - POSTGRES_PASSWORD=*
+  #   networks:
+  #     - default
 
   #Redis
   redis:
-    image: redis:6.2.3
-    hostname: redis
+    image: redis:${REDIS_VERSION}
+    hostname: redis-db
     container_name: db-redis
     restart: always
     ports:
-      - "6379:6379"
+     - "${REDIS_PORT}:${REDIS_PORT}" # localhost:6379
+    volumes:
+      - redis-db:/data
     networks:
       - default
+    healthcheck:
+      test: ["CMD", "redis-cli","ping"]
+      interval: 10s
 
-  #Quantumleap database setup
-  quantumleap-db-setup:
-    image: orchestracities/quantumleap-pg-init
-    hostname: quantumleap-db-setup
-    container_name: quantumleap-db-setup
-    depends_on:
-      - timescale
-    networks:
-      - default
-    environment:
-      - QL_DB_PASS=*
-      - QL_DB_INIT_DIR=/ql-db-init
-      - PG_HOST=timescale
-      - PG_PASS=*
+
+  # #Quantumleap database setup
+  # quantumleap-db-setup:
+  #   image: orchestracities/quantumleap-pg-init
+  #   hostname: quantumleap-db-setup
+  #   container_name: quantumleap-db-setup
+  #   depends_on:
+  #     - timescale
+  #   networks:
+  #     - default
+  #   environment:
+  #     - QL_DB_PASS=*
+  #     - QL_DB_INIT_DIR=/ql-db-init
+  #     - PG_HOST=timescale
+  #     - PG_PASS=*
 
 
   # Quantum Leap is persisting Short Term History to Crate-DB
@@ -187,45 +195,53 @@ services:
     container_name: fiware-quantumleap
     restart: always
     depends_on:
-      - timescale
-      - orion
-      - redis
+      - crate-db
+      - redis-db
     networks:
       - default
     ports:
       - "${QUANTUMLEAP_PORT}:${QUANTUMLEAP_PORT}"
     environment:
-      - QL_DEFAULT_DB=timescale
-      - POSTGRES_HOST=timescale
-      - POSTGRES_PORT=5432
-      - POSTGRES_DB_NAME=quantumleap
-      - POSTGRES_DB_USER=quantumleap
-      - POSTGRES_DB_PASS=*
-      - POSTGRES_USE_SSL=False
-      - USE_GEOCODING=False
-      - CACHE_QUERIES=True
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
+      - CRATE_HOST=crate-db
+      - REDIS_HOST=redis-db
+      - REDIS_PORT=${REDIS_PORT}
       - LOGLEVEL=DEBUG
     healthcheck:
       test: curl --fail -s http://quantumleap:${QUANTUMLEAP_PORT}/version || exit 1
 
+  #crate-db:
+  crate-db:
+    image: crate:${CRATE_VERSION}
+    hostname: crate-db
+    container_name: db-crate
+    ports:
+      # Admin UI
+      - "4200:4200"
+      # Transport protocol
+      - "4300:4300"
+    command: crate -Cauth.host_based.enabled=false  -Ccluster.name=democluster -Chttp.cors.enabled=true -Chttp.cors.allow-origin="*"
+    environment:
+      - CRATE_HEAP_SIZE=2g # see https://crate.io/docs/crate/howtos/en/latest/deployment/containers/docker.html#troubleshooting
+    volumes:
+      - crate-db:/data
+
   # Dashboard
   grafana:
-    image: grafana/grafana-enterprise:8.1.2
+    image: grafana/grafana:6.1.6 #?grafana/grafana-enterprise:8.1.2
     restart: always
     hostname: grafana
     container_name: grafana
     depends_on:
-      - timescale
+      - crate-db
     expose:
       - "${GRAFANA_PORT}"
     ports:
-      - "${GRAFANA_PORT}:${GRAFANA_PORT}" # localhost:3000
+      - "3003:3000"
     environment:
       - GF_AUTH_DISABLE_LOGIN_FORM=false
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_ANONYMOUS_ORG_NAME=Main Org.
+      - GF_INSTALL_PLUGINS=https://github.com/orchestracities/grafana-map-plugin/archive/master.zip;grafana-map-plugin,grafana-clock-panel,grafana-worldmap-panel
     volumes:
       - grafana-db:/var/lib/grafana
     networks:
@@ -239,6 +255,14 @@ networks:
         - subnet: 172.18.1.0/24
 
 volumes:
-  mongo-db: ~
-  grafana-db:
-    external: true
+ crate-db: ~
+ redis-db: ~
+ grafana: ~
+ mongo-db: ~
+ mongo-config: ~
+ data-models:
+   driver: local
+   driver_opts:
+      type: none
+      o: bind
+      device: ${PWD}/data-models
