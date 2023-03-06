@@ -85,6 +85,30 @@ For the digital twin select the JSON files of the folder ```Grafana-Dashboards/G
 
 ---
 
+## How to set Up Grafana and Crate-DB
+Set subscription on OrionLD context broker:
+```
+curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
+-H 'Content-Type: application/ld+json' \
+-H 'NGSILD-Tenant: openiot' \
+--data-raw '{
+  "description": "Notify me of all feedstock changes",
+  "type": "Subscription",
+  "entities": [{"type": "FillingLevelSensor"}],
+  "watchedAttributes": ["filling"],
+  "notification": {
+    "attributes": ["filling", "location"],
+    "format": "normalized",
+    "endpoint": {
+      "uri": "http://quantumleap:8668/v2/notify",
+      "accept": "application/json"
+    }
+  },
+   "@context": "http://context/ngsi-context.jsonld"
+}'
+```
+This command is letting the context broker know that we want every change of the attribute “filling” of all entities of type “FillingLevelSensor” to be published as a POST request do the uri, in this case “http://quantumleap:8668/v2/notify”.
+
 ## License
 
 [MIT](LICENSE) © 2020 FIWARE Foundation e.V.
