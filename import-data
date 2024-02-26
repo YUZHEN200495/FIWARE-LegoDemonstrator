@@ -1,0 +1,1151 @@
+#!/bin/bash
+
+set -e
+
+echo -e "⏳ Loading context data in \033[1mNGSI-LD\033[0m format"
+echo -e "    - all entity data models are defined referencing the" 
+echo -e "      \033[1m"${CONTEXT}"\033[0m JSON-LD context"
+
+#
+# Create Entities for the Lego Demonastrator
+#
+
+#Add moduls
+curl --location --request POST 'http://orion:1026/ngsi-ld/v1/entityOperations/create' \
+--header 'NGSILD-Tenant: openiot' \
+--header 'Link: <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+--header 'Content-Type: application/json' \
+--data-raw '[
+    {
+        "id": "urn:ngsi-ld:Building:Mobility_Hub",
+        "type": "Building",
+        "category": {
+            "type": "Property",
+            "value": ["Mobility_Hub"]
+        }
+    },
+    {
+        "id": "urn:ngsi-ld:Building:Harbour",
+        "type": "Building",
+        "category": {
+            "type": "Property",
+            "value": ["Harbour"]
+        }
+    },
+    {
+        "id": "urn:ngsi-ld:Building:Basis",
+        "type": "Building",
+        "category": {
+            "type": "Property",
+            "value": ["Basis"]
+        }
+    },
+    {
+        "id": "urn:ngsi-ld:Building:Impress",
+        "type": "Building",
+        "category": {
+            "type": "Property",
+            "value": ["Impress"]
+        }
+    },
+    {
+        "id": "urn:ngsi-ld:Building:KI_Marketplace",
+        "type": "Building",
+        "category": {
+            "type": "Property",
+            "value": ["KI_Marketplace"]
+        }
+    },
+    {
+        "id": "urn:ngsi-ld:Building:Production_Claas",
+        "type": "Building",
+        "category": {
+            "type": "Property",
+            "value": ["Production_Claas"]
+        }
+    },
+    {
+        "id": "urn:ngsi-ld:Building:Wind_Energy",
+        "type": "Building",
+        "category": {
+            "type": "Property",
+            "value": ["Wind_Energy"]
+        }
+    },
+    {
+        "id": "urn:ngsi-ld:Building:Dokk1",
+        "type": "Building",
+        "category": {
+            "type": "Property",
+            "value": ["Dokk1"]
+        }
+    }
+]
+'
+
+sleep 0.5
+
+#Register Harbour
+curl --location --request POST 'http://iot-agent:4041/iot/devices' \
+--header 'fiware-service: openiot' \
+--header 'fiware-servicepath: /' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "devices": [
+        {
+            "device_id": "ParkingSpot:Harbour:1",
+            "entity_name": "urn:ngsi-ld:ParkingSpot:Harbour:1",
+            "entity_type": "ParkingSpot",
+            "attributes": [
+                {
+                    "object_id": "status",
+                    "name": "status",
+                    "type": "Property",
+                    "metadata": {
+                        "parkingPermit": {
+                            "type": "Property",
+                            "value": "yes"
+                        }
+                    }
+                }
+            ],
+            "static_attributes": [
+                {
+                    "name": "category",
+                    "type": "Property",
+                    "value": "offStreet"
+                },
+                {
+                    "name": "refParkingSite",
+                    "type": "Relationship",
+                    "value": "urn:ngsi-ld:Building:Harbour"
+                }
+            ]
+        },
+        {
+            "device_id": "ParkingSpot:Harbour:2",
+            "entity_name": "urn:ngsi-ld:ParkingSpot:Harbour:2",
+            "entity_type": "ParkingSpot",
+            "attributes": [
+                {
+                    "object_id": "status",
+                    "name": "status",
+                    "type": "Property",
+                    "metadata": {
+                        "parkingPermit": {
+                            "type": "Property",
+                            "value": "yes"
+                        }
+                    }
+                }
+            ],
+            "static_attributes": [
+                {
+                    "name": "category",
+                    "type": "Property",
+                    "value": "offStreet"
+                },
+                {
+                    "name": "refParkingSite",
+                    "type": "Relationship",
+                    "value": "urn:ngsi-ld:Building:Harbour"
+                }
+            ]
+        },
+        {
+            "device_id": "ParkingSpot:Harbour:3",
+            "entity_name": "urn:ngsi-ld:ParkingSpot:Harbour:3",
+            "entity_type": "ParkingSpot",
+            "attributes": [
+                {
+                    "object_id": "status",
+                    "name": "status",
+                    "type": "Property",
+                    "metadata": {
+                        "parkingPermit": {
+                            "type": "Property",
+                            "value": "yes"
+                        }
+                    }
+                }
+            ],
+            "static_attributes": [
+                {
+                    "name": "category",
+                    "type": "Property",
+                    "value": "offStreet"
+                },
+                {
+                    "name": "refParkingSite",
+                    "type": "Relationship",
+                    "value": "urn:ngsi-ld:Building:Harbour"
+                }
+            ]
+        }
+    ]
+}'
+
+sleep 0.5
+
+#Register Mobility_Hub
+curl --location --request POST 'http://iot-agent:4041/iot/devices' \
+--header 'fiware-service: openiot' \
+--header 'fiware-servicepath: /' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "devices": [
+        {
+            "device_id": "ParkingSpot:Mobility_Hub:1",
+            "entity_name": "urn:ngsi-ld:ParkingSpot:Mobility_Hub:1",
+            "entity_type": "ParkingSpot",
+            "attributes": [
+                {
+                    "object_id": "status",
+                    "name": "status",
+                    "type": "Property",
+                    "metadata": {
+                        "parkingPermit": {
+                            "type": "Property",
+                            "value": "yes"
+                        }
+                    }
+                }
+            ],
+            "static_attributes": [
+                {
+                    "name": "category",
+                    "type": "Property",
+                    "value": "offStreet"
+                },
+                {
+                    "name": "refParkingSite",
+                    "type": "Relationship",
+                    "value": "urn:ngsi-ld:Building:Mobility_Hub"
+                }
+            ]
+        },
+        {
+            "device_id": "ParkingSpot:Mobility_Hub:2",
+            "entity_name": "urn:ngsi-ld:ParkingSpot:Mobility_Hub:2",
+            "entity_type": "ParkingSpot",
+            "attributes": [
+                {
+                    "object_id": "status",
+                    "name": "status",
+                    "type": "Property",
+                    "metadata": {
+                        "parkingPermit": {
+                            "type": "Property",
+                            "value": "yes"
+                        }
+                    }
+                }
+            ],
+            "static_attributes": [
+                {
+                    "name": "category",
+                    "type": "Property",
+                    "value": "offStreet"
+                },
+                {
+                    "name": "refParkingSite",
+                    "type": "Relationship",
+                    "value": "urn:ngsi-ld:Building:Mobility_Hub"
+                }
+            ]
+        },
+        {
+            "device_id": "ParkingSpot:Mobility_Hub:3",
+            "entity_name": "urn:ngsi-ld:ParkingSpot:Mobility_Hub:3",
+            "entity_type": "ParkingSpot",
+            "attributes": [
+                {
+                    "object_id": "status",
+                    "name": "status",
+                    "type": "Property",
+                    "metadata": {
+                        "parkingPermit": {
+                            "type": "Property",
+                            "value": "yes"
+                        }
+                    }
+                }
+            ],
+            "static_attributes": [
+                {
+                    "name": "category",
+                    "type": "Property",
+                    "value": "offStreet"
+                },
+                {
+                    "name": "refParkingSite",
+                    "type": "Relationship",
+                    "value": "urn:ngsi-ld:Building:Mobility_Hub"
+                }
+            ]
+        },
+        {
+            "device_id": "ParkingSpot:Mobility_Hub:4",
+            "entity_name": "urn:ngsi-ld:ParkingSpot:Mobility_Hub:4",
+            "entity_type": "ParkingSpot",
+            "attributes": [
+                {
+                    "object_id": "status",
+                    "name": "status",
+                    "type": "Property",
+                    "metadata": {
+                        "parkingPermit": {
+                            "type": "Property",
+                            "value": "yes"
+                        }
+                    }
+                }
+            ],
+            "static_attributes": [
+                {
+                    "name": "category",
+                    "type": "Property",
+                    "value": "offStreet"
+                },
+                {
+                    "name": "refParkingSite",
+                    "type": "Relationship",
+                    "value": "urn:ngsi-ld:Building:Mobility_Hub"
+                }
+            ]
+        },
+        {
+            "device_id": "electricVehicleChargingStation001",
+            "entity_name": "urn:ngsi-ld:Device:electricVehicleChargingStation001",
+            "entity_type": "EVChargingStation",
+            "protocol":"PDI-IoTA-JSON",
+            "transport":"MQTT",
+            "timezone": "Europe/Berlin",
+            "attributes": [
+                {
+                    "object_id": "distanceUltrasonic",
+                    "name": "distanceUltrasonic",
+                    "type": "Number",
+                    "metadata": {
+                        "unitCode": {
+                            "type": "Text",
+                            "value": "CMT"
+                        }
+                    }
+                },
+                {
+                    "object_id": "status",
+                    "name": "status",
+                    "type": "Property",
+                    "metadata": {
+                        "parkingPermit": {
+                            "type": "Property",
+                            "value": "yes"
+                        }
+                    }
+                },
+                {
+                    "object_id": "levelOfCharging",
+                    "name": "levelOfCharging",
+                    "type": "Property",
+                    "metadata": {
+                        "unitCode": {
+                            "type": "Text",
+                            "value": "P1"
+                        }
+                    }
+                },
+                {
+                    "object_id": "remainingTimeForFullCharge",
+                    "name": "remainingTimeForFullCharge",
+                    "type": "Property",
+                    "metadata": {
+                        "unitCode": {
+                            "type": "Text",
+                            "value": "SEC"
+                        }
+                    }
+                }
+            ],
+            "static_attributes": [
+                {
+                    "name": "controlledAsset",
+                    "type": "Relationship",
+                    "value": "urn:ngsi-ld:Building:Mobility_Hub"
+                }
+            ]
+        },
+        {
+            "device_id": "electricVehicleChargingStation002",
+            "entity_name": "urn:ngsi-ld:Device:electricVehicleChargingStation002",
+            "entity_type": "EVChargingStation",
+            "protocol":"PDI-IoTA-JSON",
+            "transport":"MQTT",
+            "timezone": "Europe/Berlin",
+            "attributes": [
+                {
+                    "object_id": "distanceUltrasonic",
+                    "name": "distanceUltrasonic",
+                    "type": "Number",
+                    "metadata": {
+                        "unitCode": {
+                            "type": "Text",
+                            "value": "CMT"
+                        }
+                    }
+                },
+                {
+                    "object_id": "status",
+                    "name": "status",
+                    "type": "Property",
+                    "metadata": {
+                        "parkingPermit": {
+                            "type": "Property",
+                            "value": "yes"
+                        }
+                    }
+                },
+                {
+                    "object_id": "levelOfCharging",
+                    "name": "levelOfCharging",
+                    "type": "Property",
+                    "metadata": {
+                        "unitCode": {
+                            "type": "Text",
+                            "value": "P1"
+                        }
+                    }
+                },
+                {
+                    "object_id": "remainingTimeForFullCharge",
+                    "name": "remainingTimeForFullCharge",
+                    "type": "Property",
+                    "metadata": {
+                        "unitCode": {
+                            "type": "Text",
+                            "value": "SEC"
+                        }
+                    }
+                }
+            ],
+            "static_attributes": [
+                {
+                    "name": "controlledAsset",
+                    "type": "Relationship",
+                    "value": "urn:ngsi-ld:Building:Mobility_Hub"
+                }
+            ]
+        },
+        {
+            "device_id": "particulateMatter001",
+            "entity_name": "urn:ngsi-ld:Device:particulateMatter001",
+            "entity_type": "Device",
+            "protocol":"PDI-IoTA-JSON",
+            "transport":"MQTT",
+            "timezone": "Europe/Berlin",
+            "commands":[
+                {
+                    "name":"level",
+                    "type":"command"
+                }
+            ],
+            "static_attributes": [
+                {
+                    "name": "controlledAsset",
+                    "type": "Relationship",
+                    "value": "urn:ngsi-ld:Building:Mobility_Hub"
+                }
+            ]
+        }
+    ]
+}'
+
+sleep 0.5
+
+#Register Basis
+curl --location --request POST 'http://iot-agent:4041/iot/devices' \
+--header 'fiware-service: openiot' \
+--header 'fiware-servicepath: /' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "devices": [
+        {
+            "device_id": "WeatherObserved:Basis:1",
+            "entity_name": "urn:ngsi-ld:WeatherObserved:Basis:1",
+            "entity_type": "WeatherObserved",
+            "attributes": [
+                {
+                    "object_id": "temperature",
+                    "name": "temperature",
+                    "type": "Property",
+                    "metadata": {
+                        "unitCode": {
+                            "type": "Text",
+                            "value": "CEL"
+                        }
+                    }
+                },
+                {
+                    "object_id": "relativeHumidity",
+                    "name": "relativeHumidity",
+                    "type": "Property",
+                    "metadata": {
+                        "unitCode": {
+                            "type": "Text",
+                            "value": "P1"
+                        }
+                    }
+                },
+                {
+                    "object_id": "feelLikesTemperature",
+                    "name": "feelLikesTemperature",
+                    "type": "Property",
+                    "metadata": {
+                        "unitCode": {
+                            "type": "Text",
+                            "value": "CEL"
+                        }
+                    }
+                }
+            ],
+            "static_attributes": [
+                {
+                    "name": "controlledAsset",
+                    "type": "Relationship",
+                    "value": "urn:ngsi-ld:Building:Basis"
+                }
+            ]
+        },
+        {
+            "device_id": "WeatherObserved:Basis:2",
+            "entity_name": "urn:ngsi-ld:WeatherObserved:Basis:2",
+            "entity_type": "WeatherObserved",
+            "attributes": [
+                {
+                    "object_id": "temperature",
+                    "name": "temperature",
+                    "type": "Property",
+                    "metadata": {
+                        "unitCode": {
+                            "type": "Text",
+                            "value": "CEL"
+                        }
+                    }
+                },
+                {
+                    "object_id": "relativeHumidity",
+                    "name": "relativeHumidity",
+                    "type": "Property",
+                    "metadata": {
+                        "unitCode": {
+                            "type": "Text",
+                            "value": "P1"
+                        }
+                    }
+                },
+                {
+                    "object_id": "feelLikesTemperature",
+                    "name": "feelLikesTemperature",
+                    "type": "Property",
+                    "metadata": {
+                        "unitCode": {
+                            "type": "Text",
+                            "value": "CEL"
+                        }
+                    }
+                }
+            ],
+            "static_attributes": [
+                {
+                    "name": "controlledAsset",
+                    "type": "Relationship",
+                    "value": "urn:ngsi-ld:Building:Basis"
+                }
+            ]
+        }
+    ]
+}'
+
+sleep 0.5
+
+#Register Impress
+curl --location --request POST 'http://iot-agent:4041/iot/devices' \
+--header 'fiware-service: openiot' \
+--header 'fiware-servicepath: /' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "devices": [
+        {
+            "device_id": "LED002",
+            "entity_name": "urn:ngsi-ld:Device:LED002",
+            "entity_type": "Device",
+            "protocol":"PDI-IoTA-JSON",
+            "transport":"MQTT",
+            "timezone": "Europe/Berlin",
+            "commands":[
+                {
+                    "name":"on",
+                    "type":"command"
+                },
+                {
+                    "name":"off",
+                    "type":"command"
+                },
+                {
+                    "name":"mode",
+                    "type":"command"
+                }
+            ],
+            "static_attributes": [
+                {
+                    "name": "controlledAsset",
+                    "type": "Relationship",
+                    "value": "urn:ngsi-ld:Building:Impress"
+                }
+            ]
+        },
+        {
+            "device_id": "weight001",
+            "entity_name": "urn:ngsi-ld:Device:weight001",
+            "entity_type": "Device",
+            "protocol":"PDI-IoTA-JSON",
+            "transport":"MQTT",
+            "timezone": "Europe/Berlin",
+            "attributes": [
+                {
+                    "object_id": "weight",
+                    "name": "weight",
+                    "type": "Number",
+                    "metadata": {
+                        "unitCode": {
+                            "type": "Text",
+                            "value": "t"
+                        }
+                    }
+                },
+                {
+                    "object_id": "weightClass",
+                    "name": "weightClass",
+                    "type": "Property",
+                    "metadata": {
+                        "unitCode": {
+                            "type": "Text",
+                            "value": ""
+                        }
+                    }
+                },
+                {
+                    "object_id": "price",
+                    "name": "price",
+                    "type": "Property",
+                    "metadata": {
+                        "unitCode": {
+                            "type": "Text",
+                            "value": "€/h"
+                        }
+                    }
+                }
+            ],
+            "static_attributes": [
+                {
+                    "name": "controlledAsset",
+                    "type": "Relationship",
+                    "value": "urn:ngsi-ld:Building:Impress"
+                }
+            ]
+        }
+    ]
+}'
+
+sleep 0.5
+
+#Register KI_Marketplace
+curl --location --request POST 'http://iot-agent:4041/iot/devices' \
+--header 'fiware-service: openiot' \
+--header 'fiware-servicepath: /' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "devices": [
+        {
+            "device_id": "LED003",
+            "entity_name": "urn:ngsi-ld:Device:LED003",
+            "entity_type": "Device",
+            "protocol":"PDI-IoTA-JSON",
+            "transport":"MQTT",
+            "timezone": "Europe/Berlin",
+            "commands":[
+                {
+                    "name":"on",
+                    "type":"command"
+                },
+                {
+                    "name":"off",
+                    "type":"command"
+                },
+                {
+                    "name":"simulation",
+                    "type":"command"
+                }
+            ],
+            "static_attributes": [
+                {
+                    "name": "controlledAsset",
+                    "type": "Relationship",
+                    "value": "urn:ngsi-ld:Building:KI_Marketplace"
+                }
+            ]
+        }
+    ]
+}'
+
+sleep 0.5
+
+#Register Production_Claas
+curl --location --request POST 'http://iot-agent:4041/iot/devices' \
+--header 'fiware-service: openiot' \
+--header 'fiware-servicepath: /' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "devices": [
+        {
+            "device_id": "LED004",
+            "entity_name": "urn:ngsi-ld:Device:LED004",
+            "entity_type": "Device",
+            "protocol":"PDI-IoTA-JSON",
+            "transport":"MQTT",
+            "timezone": "Europe/Berlin",
+            "commands":[
+                {
+                    "name":"on",
+                    "type":"command"
+                },
+                {
+                    "name":"off",
+                    "type":"command"
+                },
+                {
+                    "name":"simulation",
+                    "type":"command"
+                }
+            ],
+            "static_attributes": [
+                {
+                    "name": "controlledAsset",
+                    "type": "Relationship",
+                    "value": "urn:ngsi-ld:Building:Production_Claas"
+                }
+            ]
+        }
+    ]
+}'
+
+sleep 0.5
+
+#Register Wind_Energy
+curl --location --request POST 'http://iot-agent:4041/iot/devices' \
+--header 'fiware-service: openiot' \
+--header 'fiware-servicepath: /' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "devices": [
+        {
+            "device_id": "windmills001",
+            "entity_name": "urn:ngsi-ld:Device:windmills001",
+            "entity_type": "Device",
+            "protocol":"PDI-IoTA-JSON",
+            "transport":"MQTT",
+            "timezone": "Europe/Berlin",
+            "commands":[
+                {
+                    "name":"on",
+                    "type":"command"
+                },
+                {
+                    "name":"off",
+                    "type":"command"
+                }
+                ],
+            "static_attributes": [
+                {
+                    "name": "controlledAsset",
+                    "type": "Relationship",
+                    "value": "urn:ngsi-ld:Building:Wind_Energy"
+                }
+            ]
+        },
+        {
+            "device_id": "GreenEnergyGenerator:Wind_Energy:1",
+            "entity_name": "urn:ngsi-ld:GreenEnergyGenerator:Wind_Energy:1",
+            "entity_type": "GreenEnergyGenerator",
+            "attributes": [
+                {
+                    "object_id": "maxEolicPowerGenerated",
+                    "name": "maxEolicPowerGenerated",
+                    "type": "Number",
+                    "metadata": {
+                        "unitCode": {
+                            "type": "Text",
+                            "value": "KWT"
+                        }
+                    }
+                }
+            ],
+            "static_attributes": [
+                {
+                    "name": "generationSources",
+                    "type": "Array",
+                    "value": [
+                        "solar",
+                        "eolic"
+                    ]
+                },
+                {
+                    "name": "controlledAsset",
+                    "type": "Relationship",
+                    "value": "urn:ngsi-ld:Building:Wind_Energy"
+                }
+            ]
+        },
+        {
+            "device_id": "EnergyConsumer:Wind_Energy:1",
+            "entity_name": "urn:ngsi-ld:EnergyConsumer:Wind_Energy:1",
+            "entity_type": "EnergyConsumer",
+            "attributes": [
+                {
+                    "object_id": "p",
+                    "name": "p",
+                    "type": "Number",
+                    "metadata": {
+                        "unitCode": {
+                            "type": "Text",
+                            "value": "KWT"
+                        }
+                    }
+                }
+            ],
+            "static_attributes": [
+                {
+                    "name": "controlledAsset",
+                    "type": "Relationship",
+                    "value": "urn:ngsi-ld:Building:Wind_Energy"
+                }
+            ]
+        }
+    ]
+}'
+
+sleep 0.5
+
+#Register Dokk1
+curl --location --request POST 'http://iot-agent:4041/iot/devices' \
+--header 'fiware-service: openiot' \
+--header 'fiware-servicepath: /' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "devices": [
+        {
+            "device_id": "OffStreetParking:Dokk1:1",
+            "entity_name": "urn:ngsi-ld:OffStreetParking:Dokk1:1",
+            "entity_type": "OffStreetParking",
+            "attributes": [
+                {
+                    "object_id": "availableSpotNumber",
+                    "name": "availableSpotNumber",
+                    "type": "Number"
+                },
+                {
+                    "object_id": "occupiedSpotNumber",
+                    "name": "occupiedSpotNumber",
+                    "type": "Number"
+                }
+            ],
+            "static_attributes": [
+                {
+                    "name": "totalSpotNumber",
+                    "type": "Property",
+                    "value": 1000
+                },
+                {
+                    "name": "category",
+                    "type": "Property",
+                    "value": [
+                        "parkingGarage",
+                        "public",
+                        "underground"
+                    ]
+                },
+                {
+                    "name": "controlledAsset",
+                    "type": "Relationship",
+                    "value": "urn:ngsi-ld:Building:Dokk1"
+                }
+            ]
+        }
+    ]
+}'
+
+sleep 0.5
+
+#Register Train
+curl --location --request POST 'http://iot-agent:4041/iot/devices' \
+--header 'fiware-service: openiot' \
+--header 'fiware-servicepath: /' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "devices": [
+        {
+            "device_id": "train001",
+            "entity_name": "urn:ngsi-ld:Device:train001",
+            "entity_type": "Device",
+            "protocol":"PDI-IoTA-JSON",
+            "transport":"MQTT",
+            "timezone": "Europe/Berlin",
+            "attributes": [
+                {
+                    "object_id": "position",
+                    "name": "position",
+                    "type": "Number"
+                },
+                {
+                    "object_id": "speed",
+                    "name": "speed",
+                    "type": "Number"
+                }
+            ],
+            "commands":[
+                {
+                    "name":"setspeed",
+                    "type":"command"
+                }
+                ],
+            "static_attributes": [
+                {
+                    "name": "controlledAsset",
+                    "type": "Relationship",
+                    "value": "urn:ngsi-ld:Building:Basis"
+                }
+            ]
+        }
+    ]
+}'
+
+sleep 5
+
+#Register Services
+curl --location --request POST 'http://iot-agent:4041/iot/services' \
+--header 'fiware-service: openiot' \
+--header 'fiware-servicepath: /' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "services": [
+        {
+            "apikey": "idFZy8D9KzFko7db",
+            "cbroker": "http://orion:1026",
+            "entity_type": "Device",
+            "resource": ""
+        }
+    ]
+}'
+
+sleep 5
+
+#----------------Subscriptions-------------------------------------------------------
+#ParkingSpot
+curl --location --request POST 'http://orion:1026/ngsi-ld/v1/subscriptions/' \
+--header 'NGSILD-Tenant: openiot' \
+--header 'Content-Type: application/json' \
+--header 'Link: <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+--data-raw '{
+  "description": "Notify me if status of ParkingSpot has changed",
+  "type": "Subscription",
+  "entities": [{"type": "ParkingSpot"}],
+  "watchedAttributes": ["status"],
+  "notification": {
+    "attributes": ["status"],
+    "format": "normalized",
+    "endpoint": {
+      "uri": "http://quantumleap:8668/v2/notify",
+      "accept": "application/json",
+      "receiverInfo" : [
+        { 
+          "key":"fiware-service",
+          "value":"openiot"
+        }
+       ]
+    }
+  }
+}'
+
+sleep 1
+
+#OffStreetParking
+curl --location --request POST 'http://orion:1026/ngsi-ld/v1/subscriptions/' \
+--header 'NGSILD-Tenant: openiot' \
+--header 'Content-Type: application/json' \
+--header 'Link: <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+--data-raw '{
+  "description": "Notify me if availableSpotNumber of OffStreetParking has changed",
+  "type": "Subscription",
+  "entities": [{"type": "OffStreetParking"}],
+  "watchedAttributes": ["availableSpotNumber"],
+  "notification": {
+    "attributes": ["availableSpotNumber", "occupiedSpotNumber", "totalSpotNumber"],
+    "format": "normalized",
+    "endpoint": {
+      "uri": "http://quantumleap:8668/v2/notify",
+      "accept": "application/json",
+      "receiverInfo" : [
+        { 
+          "key":"fiware-service",
+          "value":"openiot"
+        }
+       ]
+    }
+  }
+}'
+
+sleep 1
+
+#ElectricVehicleChargingStation
+curl --location --request POST 'http://orion:1026/ngsi-ld/v1/subscriptions/' \
+--header 'NGSILD-Tenant: openiot' \
+--header 'Content-Type: application/json' \
+--header 'Link: <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+--data-raw '{
+  "description": "Notify me if distanceUltrasonic of ElectricVehicleChargingStation has changed",
+  "type": "Subscription",
+  "entities": [{"type": "EVChargingStation"}],
+  "watchedAttributes": ["distanceUltrasonic"],
+  "notification": {
+    "attributes": ["distanceUltrasonic", "status", "levelOfCharging", "remainingTimeForFullCharge"],
+    "format": "normalized",
+    "endpoint": {
+      "uri": "http://quantumleap:8668/v2/notify",
+      "accept": "application/json",
+      "receiverInfo" : [
+        { 
+          "key":"fiware-service",
+          "value":"openiot"
+        }
+       ]
+    }
+  }
+}'
+
+sleep 1
+
+#GreenEnergyGenerator
+curl --location --request POST 'http://orion:1026/ngsi-ld/v1/subscriptions/' \
+--header 'NGSILD-Tenant: openiot' \
+--header 'Content-Type: application/json' \
+--header 'Link: <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+--data-raw '{
+  "description": "Notify me if maxEolicPowerGenerated of GreenEnergyGenerator has changed",
+  "type": "Subscription",
+  "entities": [{"type": "GreenEnergyGenerator"}],
+  "watchedAttributes": ["maxEolicPowerGenerated"],
+  "notification": {
+    "attributes": ["maxEolicPowerGenerated"],
+    "format": "normalized",
+    "endpoint": {
+      "uri": "http://quantumleap:8668/v2/notify",
+      "accept": "application/json",
+      "receiverInfo" : [
+        { 
+          "key":"fiware-service",
+          "value":"openiot"
+        }
+       ]
+    }
+  }
+}'
+
+sleep 1
+
+#EnergyConsumer
+curl --location --request POST 'http://orion:1026/ngsi-ld/v1/subscriptions/' \
+--header 'NGSILD-Tenant: openiot' \
+--header 'Content-Type: application/json' \
+--header 'Link: <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+--data-raw '{
+  "description": "Notify me if power (p) of EnergyConsumer has changed",
+  "type": "Subscription",
+  "entities": [{"type": "EnergyConsumer"}],
+  "watchedAttributes": ["p"],
+  "notification": {
+    "attributes": ["p"],
+    "format": "normalized",
+    "endpoint": {
+      "uri": "http://quantumleap:8668/v2/notify",
+      "accept": "application/json",
+      "receiverInfo" : [
+        { 
+          "key":"fiware-service",
+          "value":"openiot"
+        }
+       ]
+    }
+  }
+}'
+
+sleep 1
+
+#WeatherObserved
+curl --location --request POST 'http://orion:1026/ngsi-ld/v1/subscriptions/' \
+--header 'NGSILD-Tenant: openiot' \
+--header 'Content-Type: application/json' \
+--header 'Link: <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+--data-raw '{
+  "description": "Notify me if temperature of WeatherObserved has changed",
+  "type": "Subscription",
+  "entities": [{"type": "WeatherObserved"}],
+  "watchedAttributes": ["temperature"],
+  "notification": {
+    "attributes": ["temperature", "relativeHumidity", "feelLikesTemperature"],
+    "format": "normalized",
+    "endpoint": {
+      "uri": "http://quantumleap:8668/v2/notify",
+      "accept": "application/json",
+      "receiverInfo" : [
+        { 
+          "key":"fiware-service",
+          "value":"openiot"
+        }
+       ]
+    }
+  }
+}'
+
+sleep 1
+
+#Impress (weight)
+curl --location --request POST 'http://orion:1026/ngsi-ld/v1/subscriptions/' \
+--header 'NGSILD-Tenant: openiot' \
+--header 'Content-Type: application/json' \
+--header 'Link: <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+--data-raw '{
+  "description": "Notify me of all weight changes",
+  "type": "Subscription",
+  "entities": [ {
+    "type": "Device",
+    "id": "urn:ngsi-ld:Device:weight001"
+    }
+    ],
+  "watchedAttributes": ["weight"],
+  "notification": {
+    "attributes": ["weight", "weightClass", "price"],
+    "format": "normalized",
+    "endpoint": {
+      "uri": "http://quantumleap:8668/v2/notify",
+      "accept": "application/json",
+      "receiverInfo" : [
+        { 
+          "key":"fiware-service",
+          "value":"openiot"
+        }
+       ]
+    }
+  }
+}'
+
+echo -e " \033[1;32mLoading data is done\033[0m"
