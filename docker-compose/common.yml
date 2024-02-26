@@ -132,6 +132,12 @@ services:
     healthcheck:
       test: (wget --server-response --spider --quiet  http://ld-context/ngsi-context.jsonld 2>&1 | awk 'NR==1{print $$2}'|  grep -q -e "200") || exit 1
 
+  mongo-db:
+    environment:
+      - MONGO_INITDB_DATABASE=/docker-entrypoint-initdb.d/mongoRestore.sh
+    volumes:
+      - ../backups/db.dump:/backups/db.dump
+      - ../mongoRestore/mongoRestore.sh:/docker-entrypoint-initdb.d/mongoRestore.sh
 
   redis-db:
     labels:
