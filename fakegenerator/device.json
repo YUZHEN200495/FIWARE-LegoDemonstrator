@@ -1,0 +1,177 @@
+[
+    {
+        "device_id": "ParkingSpot:Harbour:2",
+        "attributes": [
+            {
+                "id": "status",
+                "type": "Text",
+                "range" : ["free", "occupied"]
+            }
+        ]
+    },
+    {
+        "device_id": "ParkingSpot:Harbour:3",
+        "attributes": [
+            {
+                "id": "status",
+                "type": "Text",
+                "range" : ["free", "occupied"]
+            }
+        ]
+    },
+    {
+        "device_id": "ParkingSpot:Harbour:1",
+        "attributes": [
+            {
+                "id": "status",
+                "type": "Text",
+                "range" : ["free", "occupied"]
+            }
+        ]
+    },
+    {
+        "device_id": "ParkingSpot:Mobility_Hub:1",
+        "attributes": [
+            {
+                "id": "status",
+                "type": "Text",
+                "range" : ["free", "occupied"]
+            }
+        ]
+    },
+    {
+        "device_id": "ParkingSpot:Mobility_Hub:2",
+        "attributes": [
+            {
+                "id": "status",
+                "type": "Text",
+                "range" : ["free", "occupied"]
+            }
+        ]
+    },
+    {
+        "device_id": "ParkingSpot:Mobility_Hub:4",
+        "attributes": [
+            {
+                "id": "status",
+                "type": "Text",
+                "range" : ["free", "occupied"]
+            }
+        ]
+    },
+    {
+        "device_id": "ParkingSpot:Mobility_Hub:3",
+        "attributes": [
+            {
+                "id": "status",
+                "type": "Text",
+                "range" : ["free", "occupied"]
+            }
+        ]
+    },
+    {
+        "device_id": "WeatherObserved:Basis:1",
+        "attributes": [
+            {
+                "id": "temperature",
+                "type": "Number",
+                "range":[0.0,20.0],
+                "bound":[-10.0,35.0]
+            },
+            {
+                "id": "relativeHumidity",
+                "type": "Number",
+                "range":[0.0,0.4],
+                "bound":[0.0,1.0]
+            },
+            {
+                "id": "feelLikesTemperature",
+                "type": "Number",
+                "range":[0.0, 20.0],
+                "bound":[-10.0, 35.0]
+            }
+        ]
+    },
+    {
+        "device_id": "WeatherObserved:Basis:2",
+        "attributes": [
+            {
+                "id": "temperature",
+                "type": "Number",
+                "range":[0.0, 20.0],
+                "bound":[-10.0, 35.0]
+            },
+            {
+                "id": "relativeHumidity",
+                "type": "Number",
+                "range":[0.0,0.4],
+                "bound":[0.0,1.0]
+            },
+            {
+                "id": "feelLikesTemperature",
+                "type": "Number",
+                "range":[0.0, 20.0],
+                "bound":[-10.0, 35.0]
+            }
+        ]
+    },
+    {
+        "device_id": "weight001",
+        "attributes": [
+            {
+                "id": "weight",
+                "type": "Number",
+                "range":[0.0, 500.0],
+                "bound":[0.0, 1000.0]
+            },
+            {
+                "id": "weightClass",
+                "type": "Text",
+                "range": ["Container" ,"Equipment", "Materials"]
+            },
+            {
+                "id": "price",
+                "type": "Number",
+                "range":[0.0, 20.0],
+                "bound":[0.0, 1000.0]
+            }
+        ]
+    },
+    {
+        "device_id": "GreenEnergyGenerator:Wind_Energy:1",
+        "attributes": [
+            {
+                "id": "maxEolicPowerGenerated",
+                "type": "Number",
+                "range":[0.0, 10000.0],
+                "bound": null
+            }
+        ]
+    },
+    {
+        "device_id": "EnergyConsumer:Wind_Energy:1",
+        "attributes": [
+            {
+                "id": "p",
+                "type": "Number",
+                "range":[0.0, 10000.0],
+                "bound": null
+            }
+        ]
+    },
+    {
+        "device_id": "OffStreetParking:Dokk1:1",
+        "attributes": [
+            {
+                "id": "availableSpotNumber",
+                "type": "Number",
+                "range":[0, 1000],
+                "bound": [0, 1000]
+            },
+            {
+                "id": "occupiedSpotNumber",
+                "type": "Inverse"
+            }
+        ]
+    }
+]
