@@ -1,0 +1,272 @@
+#!/bin/bash
+#
+#  Command Line Interface to start all services associated with the Tutorial
+#  For this tutorial the commands are merely a convenience script to run docker-compose
+#
+
+set -e
+
+ORION="http://orion:1026/version"
+CONTEXT="http://context/ngsi-context.jsonld"
+CORE_CONTEXT="https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld"
+IOT_AGENT="http://iot-agent:4041/version"
+
+dockerCmd="docker compose"
+if (( $# == 2 )); then
+    dockerCmd="docker-compose"
+fi
+
+if (( $# < 1 )); then
+	echo "Illegal number of parameters"
+	echo "usage: services [create|orion|stop]"
+	exit 1
+fi
+
+pause(){
+	printf " "
+	count="$1"
+	[ "$count" -gt 59 ] && printf "Waiting one minute " || printf " Waiting a few seconds ";
+	while [ "$count" -gt 0 ]
+	do
+		printf "."
+		sleep 3
+		count=$((count - 3))
+	done
+	echo ""
+}
+
+getHeartbeat(){
+	eval "response=$(docker run --network fiware_default --rm curlimages/curl -s -o /dev/null -w "%{http_code}" "$1")"
+}
+
+waitForOrion () {
+	echo -e "\n⏳ Waiting for \033[1;34mOrion-LD\033[0m to be available\n"
+	
+	while ! [ `docker inspect --format='{{.State.Health.Status}}' fiware-orion` == "healthy" ]
+	do
+		echo -e "\nContext Broker HTTP state: ${response} (waiting for 200)"
+		pause 6
+		getHeartbeat "${ORION}"
+	done
+}
+
+waitForCoreContext () {
+	echo -e "\n⏳ Checking availability of \033[1m core @context\033[0m from ETSI\n"
+	eval "response=$(docker run --rm curlimages/curl -s -o /dev/null -w "%{http_code}" "$CORE_CONTEXT")"
+	while [ "${response}" -eq 000 ]
+	do
+		echo -e "\n@context HTTP state: ${response} (waiting for 200)"
+		pause 3
+		eval "response=$(docker run --rm curlimages/curl -s -o /dev/null -w "%{http_code}" "$CORE_CONTEXT")"
+	done
+}
+
+waitForUserContext () {
+	echo -e "\n⏳ Waiting for user \033[1m@context\033[0m to be available\n"
+	getHeartbeat "${CONTEXT}"
+	while [ "${response}" -eq 000 ]
+	do
+		echo -e "\n@context HTTP state: ${response} (waiting for 200)"
+		pause 3
+		getHeartbeat "${CONTEXT}"
+	done
+}
+
+waitForMongo () {
+	echo -e "\n⏳ Waiting for \033[1mMongoDB\033[0m to be available\n"
+	while ! [ `docker inspect --format='{{.State.Health.Status}}' db-mongo` == "healthy" ]
+	do 
+		sleep 1
+	done
+}
+
+waitForGenerator () {
+    echo -e "\n⏳ Waiting for \033[1mFakeDataGenerator\033[0m to be available\n"
+    while ! [`docker inspect --format='{{.State.Running}}' smartworld-fakegenerator` == "true"]
+    do
+        sleep 1
+    done
+}
+
+waitForIoTAgent () {
+	echo -e "\n⏳ Waiting for \033[1;36mIoT-Agent\033[0m to be available\n"
+	while [ `docker run --network fiware_default --rm curlimages/curl -s -o /dev/null -w %{http_code} 'http://iot-agent:4041/version'` -eq 000 ]
+ 	do 
+	  echo -e "IoT Agent HTTP state: " `curl -s -o /dev/null -w %{http_code} 'http://localhost:4041/version'` " (waiting for 200)"
+	  sleep 6
+	done
+}
+
+loadData () {
+	waitForUserContext
+    waitForIoTAgent
+	export CONTEXT_BROKER="$1" 
+	docker run --rm -v $(pwd)/import-data:/import-data \
+		--network fiware_default \
+		-e CONTEXT_BROKER=${CONTEXT_BROKER} \
+        -e CONTEXT=${CONTEXT} \
+        -e IOT_AGENT=${IOT_AGENT} \
+		--entrypoint /bin/ash curlimages/curl import-data
+	echo ""
+}
+
+stoppingContainers () {
+	CONTAINERS=$(docker ps --filter "label=org.fiware=SmartWorld" -aq)
+	if [[ -n $CONTAINERS ]]; then 
+		echo "Stopping containers"
+		docker rm -f $CONTAINERS || true
+	fi
+	#VOLUMES=$(docker volume ls -qf dangling=true) 
+	#if [[ -n $VOLUMES ]]; then 
+	#	echo "Removing old volumes"
+    #	docker volume rm $VOLUMES || true
+	#fi
+	NETWORKS=$(docker network ls  --filter "label=org.fiware=SmartWorld" -q) 
+	if [[ -n $NETWORKS ]]; then 
+		echo "Removing SmartWorld networks"
+		docker network rm $NETWORKS || true
+	fi
+}
+
+displayServices () {
+	echo ""
+	docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" --filter name=fiware-*
+	echo ""
+}
+
+addDatabaseIndex () {
+	printf "Adding appropriate \033[1mMongoDB\033[0m indexes for \033[1;34mOrion\033[0m  ..."
+	docker exec  db-mongo mongo --eval '
+	conn = new Mongo();db.createCollection("orion");
+	db = conn.getDB("orion");
+	db.createCollection("entities");
+	db.entities.createIndex({"_id.servicePath": 1, "_id.id": 1, "_id.type": 1}, {unique: true});
+	db.entities.createIndex({"_id.type": 1}); 
+	db.entities.createIndex({"_id.id": 1});' > /dev/null
+
+	docker exec  db-mongo mongo --eval '
+	conn = new Mongo();db.createCollection("orion-openiot");
+	db = conn.getDB("orion-openiot");
+	db.createCollection("entities");
+	db.entities.createIndex({"_id.servicePath": 1, "_id.id": 1, "_id.type": 1}, {unique: true});
+	db.entities.createIndex({"_id.type": 1}); 
+	db.entities.createIndex({"_id.id": 1});' > /dev/null
+	echo -e " \033[1;32mdone\033[0m"
+
+	printf "Adding appropriate \033[1mMongoDB\033[0m indexes for \033[1;36mIoT-Agent\033[0m  ..."
+	docker exec  db-mongo mongo --eval '
+	conn = new Mongo();
+	db = conn.getDB("iotagentul");
+	db.getCollectionNames().forEach(c=>db[c].drop());
+	db.createCollection("devices");
+	db.devices.createIndex({"_id.service": 1, "_id.id": 1, "_id.type": 1});
+	db.devices.createIndex({"_id.type": 1}); 
+	db.devices.createIndex({"_id.id": 1});
+	db.createCollection("groups");
+	db.groups.createIndex({"_id.resource": 1, "_id.apikey": 1, "_id.service": 1});
+	db.groups.createIndex({"_id.type": 1});' > /dev/null
+	echo -e " \033[1;32mdone\033[0m"
+}
+
+mongoDump () {
+    echo "\033[1;34mDumping mongo-db\033[0m"
+    docker exec db-mongo sh -c 'mongodump --archive' > backups/db.dump
+}
+
+command="$1"
+case "${command}" in
+	"help")
+        echo -e "usage:     services [create|setup|start|simulate|stop|delete]\n"
+        echo -e "create:    pulls the docker images"
+        echo -e "setup:     downloads context data and saves it to be used later"
+        echo -e "           whitout internet, and starts the context broker"
+        echo -e "start:     starts the context broker without the need of internet"
+        echo -e "simulate:  starts the context broker along with the simulator,"
+        echo -e "           needs internet to work"
+        echo -e "stop:      stops all the docker containers"
+        echo -e "delete:    deletes all volumes, resets the context broker to its"
+        echo -e "           initial state, without any data and configuration"
+        ;;
+    "setup")
+		export $(cat .env | grep "#" -v)
+		stoppingContainers
+		waitForCoreContext
+		echo -e "Starting containers:  \033[1;34mOrion\033[0m, \033[1;34mQuantumLeap\033[0m, \033[1;36mIoT-Agent\033[0m, a linked data \033[1mContext\033[0m, a \033[1mGrafana\033[0m metrics dashboard, \033[1mCrateDB\033[0m and \033[1mMongoDB\033[0m databases and a \033[1mRedis\033[0m cache."
+		echo -e "- \033[1;34mOrion\033[0m is the context broker"
+		echo -e "- \033[1;34mQuantumLeap\033[0m will write to CrateDB"
+		echo -e "- \033[1mGrafana\033[0m will read from CrateDB"
+		echo -e "- Data models \033[1m@context\033[0m is supplied externally"
+		echo ""
+		${dockerCmd} -f docker-compose/common.yml -f docker-compose/mongo-setup.yml -p fiware up -d --renew-anon-volumes
+		waitForMongo
+		addDatabaseIndex
+		waitForOrion
+		loadData orion:1026
+		displayServices
+        mongoDump
+		echo -e "Done! Now the contex broker should be active!"
+        echo -e "\e]8;;http://localhost:3003\a\033[1mGrafana\033[0m\e]8;;\a"
+        echo -e "\e]8;;http://localhost:4200\a\033[1mCrate-DB\033[0m\e]8;;\a"
+		;;
+	"start")
+		export $(cat .env | grep "#" -v)
+		stoppingContainers
+		echo -e "Starting containers:  \033[1;34mOrion\033[0m, \033[1;34mQuantumLeap\033[0m, \033[1;36mIoT-Agent\033[0m, a linked data \033[1mContext\033[0m, a \033[1mGrafana\033[0m metrics dashboard, \033[1mCrateDB\033[0m and \033[1mMongoDB\033[0m databases and a \033[1mRedis\033[0m cache."
+		echo -e "- \033[1;34mOrion\033[0m is the context broker"
+		echo -e "- \033[1;34mQuantumLeap\033[0m will write to CrateDB"
+		echo -e "- \033[1mGrafana\033[0m will read from CrateDB"
+		echo -e "- Data models \033[1m@context\033[0m is supplied externally"
+		echo ""
+		${dockerCmd} -f docker-compose/common.yml -f docker-compose/mongo-restore.yml -p fiware up -d --remove-orphans
+		waitForMongo
+		waitForOrion
+        displayServices
+		echo -e "Done! Now the contex broker should be active!"
+        echo -e "\e]8;;http://localhost:3003\a\033[1mGrafana\033[0m\e]8;;\a"
+        echo -e "\e]8;;http://localhost:4200\a\033[1mCrate-DB\033[0m\e]8;;\a"
+		;;
+	"stop")
+		export $(cat .env | grep "#" -v)
+		stoppingContainers
+		;;
+    "simulate")
+        export $(cat .env | grep "#" -v)
+		stoppingContainers
+		waitForCoreContext
+		echo -e "Starting containers:  \033[1;34mOrion\033[0m, \033[1;34mQuantumLeap\033[0m, \033[1;36mIoT-Agent\033[0m, a linked data \033[1mContext\033[0m, a \033[1mGrafana\033[0m metrics dashboard, \033[1mCrateDB\033[0m and \033[1mMongoDB\033[0m databases and a \033[1mRedis\033[0m cache."
+		echo -e "- \033[1;34mOrion\033[0m is the context broker"
+		echo -e "- \033[1;34mQuantumLeap\033[0m will write to CrateDB"
+		echo -e "- \033[1mGrafana\033[0m will read from CrateDB"
+		echo -e "- Data models \033[1m@context\033[0m is supplied externally"
+		echo -e "- \033[1;34mFakegenerator\033[0m simulates devices and sensors"
+		echo ""
+		${dockerCmd} -f docker-compose/common.yml -f docker-compose/mongo-restore.yml -f docker-compose/fakegenerator.yml -p fiware up -d --renew-anon-volumes
+		waitForMongo
+		waitForOrion
+		displayServices
+		echo -e "Done! Now the contex broker should be active!"
+        echo -e "Click here to access the Dashboards:"
+        echo -e "\e]8;;http://localhost:3003\a\033[1mGrafana\033[0m\e]8;;\a"
+        echo -e "\e]8;;http://localhost:4200\a\033[1mCrate-DB\033[0m\e]8;;\a"
+        ;;
+	"create")
+		export $(cat .env | grep "#" -v)
+		echo "Pulling Docker images"
+		docker pull curlimages/curl
+        ${dockerCmd} -f docker-compose/common.yml -f docker-compose/mongo-setup.yml -f docker-compose/fakegenerator.yml pull
+		;;
+    "delete")
+        export $(cat .env | grep "#" -v)
+		stoppingContainers
+        VOLUMES=$(docker volume ls -qf dangling=true) 
+        if [[ -n $VOLUMES ]]; then 
+        	echo "Removing old volumes"
+        	docker volume rm $VOLUMES || true
+        fi
+        ;;
+	*)
+		echo "Command not Found."
+		echo "usage: services [create|setup|start|simulate|stop]"
+		exit 127;
+		;;
+esac
