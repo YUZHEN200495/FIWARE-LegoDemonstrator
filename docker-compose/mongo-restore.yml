@@ -1,0 +1,26 @@
+version: "3.5"
+
+services:
+  mongo-db:
+    labels:
+      org.fiware: 'SmartWorld'
+    image: mongo:${MONGO_DB_VERSION}
+    hostname: mongo-db
+    container_name: db-mongo
+    restart: always
+    expose:
+      - "${MONGO_DB_PORT}"
+    ports:
+      - "${MONGO_DB_PORT}:${MONGO_DB_PORT}" # localhost:27017
+    networks:
+      - default
+    environment:
+      - MONGO_INITDB_DATABASE=/docker-entrypoint-initdb.d/mongoRestore.sh
+    volumes:
+      - mongo-db:/data/db
+      - mongo-config:/data/configdb
+      - ../mongoRestore/mongoRestore.sh:/docker-entrypoint-initdb.d/mongoRestore.sh
+      - ../backups/db.dump:/backups/db.dump
+    healthcheck:
+      test: [ "CMD", "mongo", "--quiet", "127.0.0.1/test", "--eval", "'quit(db.runCommand({ ping: 1 }).ok ? 0 : 2)'"]
+      interval: 5s
