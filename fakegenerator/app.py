@@ -11,7 +11,7 @@ def send_data(device_id: str, attr: str, value: Union[int, float, str]):
     return client.publish(topic, value)
 
 def generate() -> list:
-    with open("devices.json", "r") as f:
+    with open("device.json", "r") as f:
         devices = json.load(f)
 
     out = []
@@ -25,7 +25,7 @@ devices = generate()
 
 
 
-client = mqtt.Client("Lucca")
+client = mqtt.Client("lego")
 client.username_pw_set(
     "LegoDemonstrator",
     "Lego12Demo34nstr56ator"
