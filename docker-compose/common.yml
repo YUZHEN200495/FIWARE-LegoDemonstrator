@@ -1,4 +1,4 @@
-version: "3.5"
+version: "3.8"
 services:
   # Orion is the context broker
   orion:
@@ -97,7 +97,7 @@ services:
   quantumleap:
     labels:
       org.fiware: 'SmartWorld'
-    image: orchestracities/quantumleap:${QUANTUMLEAP_VERSION}
+    image: quay.io/fiware/quantumleap:0.9.0-PRE
     hostname: quantumleap
     container_name: fiware-quantumleap
     depends_on:
@@ -126,18 +126,32 @@ services:
     ports:
       - "3004:80"
     volumes:
-      - ../data-models:/usr/local/apache2/htdocs/
+      - data-models:/usr/local/apache2/htdocs/
     networks:
       - default
     healthcheck:
       test: (wget --server-response --spider --quiet  http://ld-context/ngsi-context.jsonld 2>&1 | awk 'NR==1{print $$2}'|  grep -q -e "200") || exit 1
 
   mongo-db:
-    environment:
-      - MONGO_INITDB_DATABASE=/docker-entrypoint-initdb.d/mongoRestore.sh
+    labels:
+      org.fiware: 'SmartWorld'
+    image: mongo:${MONGO_DB_VERSION}
+    hostname: mongo-db
+    container_name: db-mongo
+    expose:
+      - "${MONGO_DB_PORT}"
+    ports:
+      - "${MONGO_DB_PORT}:${MONGO_DB_PORT}" # localhost:27017
+    networks:
+      - default
     volumes:
-      - ../backups/db.dump:/backups/db.dump
-      - ../mongoRestore/mongoRestore.sh:/docker-entrypoint-initdb.d/mongoRestore.sh
+      - mongo-db:/data/db
+      - mongo-config:/data/configdb
+    healthcheck:
+      test: |
+        host=`hostname --ip-address || echo '127.0.0.1'`; 
+        mongo --quiet $host/test --eval 'quit(db.runCommand({ ping: 1 }).ok ? 0 : 2)' && echo 0 || echo 1    
+      interval: 5s
 
   redis-db:
     labels:
@@ -191,37 +205,6 @@ services:
     volumes:
       - grafana:/var/lib/grafana
 
-  proxy:
-    labels:
-      org.fiware: 'SmartWorld'
-    build:
-      context: ./proxy
-      dockerfile: Dockerfile
-    hostname: proxy
-    ports:
-     - "8080:8080"
-    container_name: smartworld-proxy
-    depends_on:
-     - orion
-    networks:
-      - default
-    restart: always
-
-  frontend:
-    labels:
-      org.fiware: 'SmartWorld'
-    build:
-      context: ./FIWARE-SmartWorldFrontend
-      dockerfile: Dockerfile
-    hostname: frontend
-    ports:
-     - "8000:8000"
-    container_name: smartworld-frontend
-    depends_on:
-     - orion
-    networks:
-      - default
-    restart: always
 
 volumes:
   crate-db: ~
