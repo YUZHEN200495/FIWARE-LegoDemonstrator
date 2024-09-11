@@ -1,0 +1,107 @@
+version: "3.8"
+services:
+  orion:
+    platform: linux/amd64
+    image: quay.io/fiware/orion-ld:1.6.0-pre-1615
+    hostname: orion
+    container_name: fiware-orion
+    depends_on:
+      - mongo-db
+    networks:
+      - default
+    ports:
+      - "1026:1026"
+    command: -dbhost mongo-db -logLevel DEBUG -forwarding -experimental -wip entityMaps
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "-s", "http://orion:1026/version", "||", "exit", "1"]
+
+  mongo-db:
+    image: mongo:latest
+    hostname: mongo-db
+    container_name: db-mongo
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    expose:
+      - 27017
+    ports:
+      - "27017:27017"
+    networks:
+      - default
+
+  quantumleap:
+    labels:
+      org.fiware: 'SmartWorld'
+    image: quay.io/fiware/quantumleap:0.9.0-PRE
+    hostname: quantumleap
+    container_name: fiware-quantumleap
+    depends_on:
+      - crate-db
+      - redis-db
+    networks:
+      - default
+    ports:
+      - "${QUANTUMLEAP_PORT}:${QUANTUMLEAP_PORT}"
+    environment:
+      - CRATE_HOST=crate-db
+      - REDIS_HOST=redis-db
+      - REDIS_PORT=${REDIS_PORT}
+      - LOGLEVEL=DEBUG
+    healthcheck:
+      test: curl --fail -s http://quantumleap:${QUANTUMLEAP_PORT}/version || exit 1
+
+  ld-context:
+    labels:
+      org.fiware: 'SmartWorld'
+    image: httpd:alpine
+    hostname: context
+    container_name: fiware-ld-context
+    restart: always
+    ports:
+      - "3004:80"
+    volumes:
+      - data-models:/usr/local/apache2/htdocs/
+    networks:
+      - default
+    healthcheck:
+      test: (wget --server-response --spider --quiet http://ld-context/ngsi-context.jsonld 2>&1 | awk 'NR==1{print $$2}'| grep -q -e "200") || exit 1
+
+  redis-db:
+    labels:
+      org.fiware: 'SmartWorld'
+    image: docker.io/library/redis:latest
+    hostname: redis-db
+    container_name: db-redis
+    networks:
+      - default
+    ports:
+      - "${REDIS_PORT}:${REDIS_PORT}"
+    volumes:
+      - redis-db:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+
+  crate-db:
+    labels:
+      org.fiware: 'SmartWorld'
+    image: docker.io/crate/crate:latest
+    hostname: crate-db
+    container_name: db-crate
+    ports:
+      - "4200:4200"
+      - "4300:4300"
+    command: crate -Cauth.host_based.enabled=false -Ccluster.name=democluster -Chttp.cors.enabled=true -Chttp.cors.allow-origin="*" -Cnetwork.host=_site_
+    environment:
+      - CRATE_HEAP_SIZE=2g
+    volumes:
+      - crate-db:/data
+
+volumes:
+  mongo_data:
+  crate-db:
+  redis-db:
+  data-models:
+
